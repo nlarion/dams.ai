@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Tokenizer Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .result-box {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #4CAF50;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>NLP Tokenizer Demo</h1>
+    
+    <div class="container">
+        <div class="card">
+            <h2>1. Load Corpus</h2>
+            <div class="form-group">
+                <label for="corpusFile">Choose a JSON file with corpus data:</label>
+                <input type="file" id="corpusFile" accept=".json">
+            </div>
+            <div class="form-group">
+                <label for="corpusPreview">Corpus Preview:</label>
+                <div id="corpusPreview" class="result-box">No corpus loaded</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>2. Configure Tokenizer</h2>
+            <div class="options-grid">
+                <div class="form-group">
+                    <label for="tokenizationMode">Tokenization Mode:</label>
+                    <select id="tokenizationMode">
+                        <option value="word">Word-level</option>
+                        <option value="bpe">Byte-Pair Encoding (BPE)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="caseSensitive">Case Sensitive:</label>
+                    <select id="caseSensitive">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="maxVocabSize">Max Vocab Size:</label>
+                    <input type="number" id="maxVocabSize" value="100000" min="100" max="500000">
+                </div>
+                <div class="form-group">
+                    <label for="minFrequency">Min Word Frequency:</label>
+                    <input type="number" id="minFrequency" value="2" min="1" max="100">
+                </div>
+            </div>
+            <button id="buildVocab">Build Vocabulary</button>
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="vocabResult">Vocabulary Info:</label>
+                <div id="vocabResult" class="result-box">No vocabulary built</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>3. Tokenize Text</h2>
+            <div class="form-group">
+                <label for="textToTokenize">Enter text to tokenize:</label>
+                <textarea id="textToTokenize" placeholder="Enter some text here...">The quick brown fox jumps over the lazy dog.</textarea>
+            </div>
+            <button id="tokenizeText">Tokenize</button>
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="tokenizeResult">Result:</label>
+                <div id="tokenizeResult" class="result-box">No tokenization result</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>4. Save/Load Vocabulary</h2>
+            <button id="saveVocab">Save Vocabulary to File</button>
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="loadVocabFile">Load Vocabulary from File:</label>
+                <input type="file" id="loadVocabFile" accept=".json">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add the browser tokenizer script -->
+    <script src="browser-tokenizer.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize tokenizer
+            const tokenizer = new NLPTokenizer({
+                mode: 'word',
+                maxVocabSize: 10000,
+                minFrequency: 2,
+                caseSensitive: false
+            });
+            
+            let corpus = null;
+            
+            // Load corpus file
+            document.getElementById('corpusFile').addEventListener('change', async (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    try {
+                        corpus = await tokenizer.loadCorpusFromFile(file);
+                        
+                        // Display corpus preview
+                        const preview = corpus.slice(0, 3).map(text => 
+                            text.length > 100 ? text.substring(0, 100) + '...' : text
+                        ).join('<br><br>');
+                        
+                        document.getElementById('corpusPreview').innerHTML = 
+                            `<p><strong>${corpus.length}</strong> documents loaded.</p>
+                            <p><strong>Preview:</strong><br>${preview}</p>`;
+                            
+                    } catch (error) {
+                        document.getElementById('corpusPreview').innerHTML = 
+                            `<p style="color: red;">Error: ${error.message}</p>`;
+                    }
+                }
+            });
+            
+            // Build vocabulary
+            document.getElementById('buildVocab').addEventListener('click', () => {
+                if (!corpus) {
+                    document.getElementById('vocabResult').innerHTML = 
+                        `<p style="color: red;">Please load a corpus first</p>`;
+                    return;
+                }
+                
+                // Update tokenizer options
+                tokenizer.options.mode = document.getElementById('tokenizationMode').value;
+                tokenizer.options.caseSensitive = document.getElementById('caseSensitive').value === 'true';
+                tokenizer.options.maxVocabSize = parseInt(document.getElementById('maxVocabSize').value);
+                tokenizer.options.minFrequency = parseInt(document.getElementById('minFrequency').value);
+                
+                // Build vocabulary
+                try {
+                    tokenizer.buildVocabulary(corpus);
+                    
+                    document.getElementById('vocabResult').innerHTML = 
+                        `<p>Vocabulary built with <strong>${tokenizer.vocab.size}</strong> tokens</p>
+                        <p>Mode: <strong>${tokenizer.options.mode}</strong></p>
+                        <p>Case Sensitive: <strong>${tokenizer.options.caseSensitive}</strong></p>`;
+                } catch (error) {
+                    document.getElementById('vocabResult').innerHTML = 
+                        `<p style="color: red;">Error: ${error.message}</p>`;
+                }
+            });
+            
+            // Tokenize text
+            document.getElementById('tokenizeText').addEventListener('click', () => {
+                const text = document.getElementById('textToTokenize').value;
+                
+                if (!text) {
+                    document.getElementById('tokenizeResult').innerHTML = 
+                        `<p style="color: red;">Please enter text to tokenize</p>`;
+                    return;
+                }
+                
+                if (tokenizer.vocab.size === 0) {
+                    document.getElementById('tokenizeResult').innerHTML = 
+                        `<p style="color: red;">Please build vocabulary first</p>`;
+                    return;
+                }
+                
+                try {
+                    const tokens = tokenizer.tokenize(text);
+                    const detokenized = tokenizer.detokenize(tokens);
+                    
+                    document.getElementById('tokenizeResult').innerHTML = 
+                        `<p><strong>Original text:</strong> ${text}</p>
+                        <p><strong>Token IDs:</strong> ${JSON.stringify(tokens)}</p>
+                        <p><strong>Token mapping:</strong> ${tokens.map(id => 
+                            `${id} → "${tokenizer.idToToken.get(id)}"`).join(', ')}</p>
+                        <p><strong>Detokenized:</strong> ${detokenized}</p>`;
+                } catch (error) {
+                    document.getElementById('tokenizeResult').innerHTML = 
+                        `<p style="color: red;">Error: ${error.message}</p>`;
+                }
+            });
+            
+            // Save vocabulary
+            document.getElementById('saveVocab').addEventListener('click', () => {
+                if (tokenizer.vocab.size === 0) {
+                    alert('Please build vocabulary first');
+                    return;
+                }
+                
+                try {
+                    tokenizer.saveVocabularyToFile('vocabulary.json');
+                } catch (error) {
+                    alert(`Error saving vocabulary: ${error.message}`);
+                }
+            });
+            
+            // Load vocabulary
+            document.getElementById('loadVocabFile').addEventListener('change', async (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    try {
+                        await tokenizer.loadVocabularyFromFile(file);
+                        
+                        document.getElementById('vocabResult').innerHTML = 
+                            `<p>Vocabulary loaded with <strong>${tokenizer.vocab.size}</strong> tokens</p>
+                            <p>Mode: <strong>${tokenizer.options.mode}</strong></p>
+                            <p>Case Sensitive: <strong>${tokenizer.options.caseSensitive}</strong></p>`;
+                    } catch (error) {
+                        alert(`Error loading vocabulary: ${error.message}`);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

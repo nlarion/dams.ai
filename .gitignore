@@ -1,0 +1,5 @@
+*.ipynb_checkpoints
+*corpus.json*
+*corpus2.json*
+*vocab2.json*
+*vocab.json*
