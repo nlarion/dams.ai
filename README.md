@@ -158,6 +158,6 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ## 📧 Contact
 
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
+Your Name - [@nlarion](https://twitter.com/nlarion) - neil.larion@gmail.com
 
-Project Link: [https://github.com/yourusername/tensorflow-nlp-ad-classification](https://github.com/yourusername/tensorflow-nlp-ad-classification)
+Project Link: [https://www.dams.ai](https://www.dams.ai)
