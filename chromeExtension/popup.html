@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ad Detector</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 300px;
+    }
+    
+    .container {
+      padding: 15px;
+    }
+    
+    h1 {
+      font-size: 18px;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .status-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .status {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .status-text {
+      font-weight: bold;
+    }
+    
+    .enabled {
+      color: #4CAF50;
+    }
+    
+    .disabled {
+      color: #F44336;
+    }
+    
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+    }
+    
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+    
+    input:focus + .slider {
+      box-shadow: 0 0 1px #4CAF50;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    
+    .slider.round {
+      border-radius: 24px;
+    }
+    
+    .slider.round:before {
+      border-radius: 50%;
+    }
+    
+    .slider-container {
+      margin-bottom: 15px;
+    }
+    
+    .range-slider {
+      width: 100%;
+      margin-top: 5px;
+    }
+    
+    .stats-container {
+      background-color: #f5f5f5;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    
+    .stat:last-child {
+      margin-bottom: 0;
+    }
+    
+    .stat-label {
+      font-weight: bold;
+    }
+    
+    button {
+      width: 100%;
+      padding: 8px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      background-color: #0b7dda;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ad Detector</h1>
+    
+    <div class="status-container">
+      <div class="status">
+        <span class="status-text">Status:</span>
+        <span id="status-value" class="enabled">Enabled</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="enableToggle" checked>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    
+    <div class="slider-container">
+      <label for="confidenceSlider">Confidence Threshold: <span id="confidenceValue">90%</span></label>
+      <input type="range" min="50" max="100" value="90" class="range-slider" id="confidenceSlider">
+    </div>
+    
+    <div class="stats-container">
+      <div class="stat">
+        <span class="stat-label">Ads Detected:</span>
+        <span id="detected-count">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Ads Removed:</span>
+        <span id="removed-count">0</span>
+      </div>
+    </div>
+    
+    <button id="resetStats">Reset Statistics</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
