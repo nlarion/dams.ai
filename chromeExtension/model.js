@@ -17,11 +17,16 @@ class AdDetector {
         console.log('Loading Ad Detector model...');
         
         // Load the model
-        this.model = await tf.loadLayersModel(chrome.runtime.getURL('model/model.json'));
+        this.model = await tf.loadLayersModel('model/model.json', {
+          inputShape: [50]  // Use your max_length value here (50 from your Python code)
+        });
         
         // Load the vocabulary
         const response = await fetch(chrome.runtime.getURL('model/vocabulary.json'));
         const vocabData = await response.json();
+
+        // const response = await fetch('./model/vocabulary.json');
+        // vocabData = await response.json();
         
         // Process vocabulary based on format
         this.vocabulary = {};
@@ -39,8 +44,10 @@ class AdDetector {
             if (specialTokens.length >= 1) this.padToken = specialTokens[0];
             if (specialTokens.length >= 2) this.oovToken = specialTokens[1];
           }
+          console.log('fucking bullshit', this.vocabulary);
         } else {
           // Handle simple dictionary format
+          console.log('wow')
           this.vocabulary = vocabData;
         }
         
@@ -56,25 +63,23 @@ class AdDetector {
     }
   
     tokenize(text) {
-      // Clean and preprocess the text
-      const cleanText = text.toLowerCase().replace(/[^\w\s]/g, ' ');
+      // Convert to lowercase and remove punctuation
+      const cleanText = text.toLowerCase().replace(/[^\w\s]/g, '');
       
       // Split into words
-      const words = cleanText.split(/\s+/).filter(word => word.length > 0);
+      const words = cleanText.split(/\s+/);
       
       // Convert words to indices
-      const padIndex = this.vocabulary[this.padToken] || 0;
-      const oovIndex = this.vocabulary[this.oovToken] || 1;
+      const oovIndex = vocab['<OOV>'] || 1;
+      const sequence = words.map(word => vocab[word] || oovIndex);
       
-      const sequence = words.map(word => 
-        this.vocabulary[word] !== undefined ? this.vocabulary[word] : oovIndex
-      );
+      // Truncate or pad as needed
+      const padIndex = vocab['<PAD>'] || 0;
       
-      // Truncate or pad sequence to maxLength
-      if (sequence.length > this.maxLength) {
-        return sequence.slice(0, this.maxLength);
+      if (sequence.length > maxLength) {
+        return sequence.slice(0, maxLength);
       } else {
-        const padding = Array(this.maxLength - sequence.length).fill(padIndex);
+        const padding = Array(maxLength - sequence.length).fill(padIndex);
         return [...sequence, ...padding];
       }
     }
