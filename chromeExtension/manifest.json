@@ -20,15 +20,17 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["tf.min.js", "model.js", "content.js"],
+            "js": ["content.js"],
             "run_at": "document_end"
         }
     ],
     "web_accessible_resources": [{
-        "resources": [ "background.js",
-                      "tf.min.js",
-                      "model/model.json",
-                      "model/vocabulary.json"], 
+        "resources": [  "background.js",
+						"tfjs-backend-wasm-simd.wasm",
+						"tfjs-backend-wasm-threaded-simd.wasm",
+						"tfjs-backend-wasm.wasm",
+						"model/model.json",
+						"model/vocabulary.json"], 
         "matches": ["<all_urls>"],
         "extension_ids": []
       }]
