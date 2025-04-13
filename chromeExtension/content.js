@@ -101,7 +101,7 @@
 			// Check if it's an ad
 			//const result = await window.adDetector.predict(text);
 			var startTime = new Date();
-			chrome.runtime.sendMessage({text: text, time: startTime}, (result) => {
+			chrome.runtime.sendMessage({text: text, type: 'GET_PREDICTION',time: startTime}, (result) => {
 				console.log("result ",result);
 				console.log("seconds to build response: ",(new Date() - startTime) / 1000);
 
@@ -117,9 +117,12 @@
 						element.style.display = 'none';
 						stats.removed++;
 					}
+					return Promise.resolve({ response: chrome.runtime.lastError });	
+				} else{
+					return Promise.resolve({ response: chrome.runtime.lastError });	
+
 				}
 				// needed in callback or it gets pissed
-				return Promise.resolve({ response: chrome.runtime.lastError });	
 			});
 			
 
