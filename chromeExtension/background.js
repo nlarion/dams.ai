@@ -4,6 +4,7 @@
 const predictor = new AdPredictor();
 let isInitialized = false;
 
+
 chrome.runtime.onInstalled.addListener(() => {
     // Set default settings
     chrome.storage.local.set({
@@ -17,7 +18,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Use a single message listener for all message types
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log('Received message:', message);
+    //console.log('Received message:', message);
     
     if (message.type === 'STATS_UPDATE') {
         // Update statistics
@@ -48,44 +49,43 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     else if (message.type === 'GET_PREDICTION') {
         // Handle GET_PREDICTION request
         console.log('Getting prediction for:', message.text.substring(0, 50) + '...');
-        
         const getPrediction = async () => {
-            if (!isInitialized) {
-                await predictor.initialize();
-                isInitialized = true;
-            }
-
-            try {
-                // Tokenize text
-                const sequence = predictor.tokenize(message.text);
-
-                // Create tensor
-                const inputTensor = predictor.createInputTensor(sequence)
-
-                // Make prediction
-                const outputTensor = predictor.model.predict(inputTensor);
-                const prediction = await outputTensor.dataSync();
-
-                // Cleanup
-                inputTensor.dispose();
-                outputTensor.dispose();
-
-                // Return result
-                const isAd = prediction[0] > 0.5;
-                const confidence = isAd ? prediction[0] : 1 - prediction[0];
-
-                return {
-                    isAd,
-                    text: message.text,
-                    label: isAd ? 'Ad' : 'Not Ad',
-                    confidence,
-                    rawPrediction: prediction[0]
-                };
-            } catch (error) {
-                console.error('Prediction error:', error);
-                return {error: error.message};
-            }
-        };
+			if (!isInitialized) {
+				await predictor.initialize();
+				isInitialized = true;
+			}
+		
+			try {
+				// Tokenize text
+				const sequence = predictor.tokenize(message.text);
+		
+				// Create tensor
+				const inputTensor = predictor.createInputTensor(sequence)
+		
+				// Make prediction
+				const outputTensor = predictor.model.predict(inputTensor);
+				const prediction = await outputTensor.dataSync();
+		
+				// Cleanup
+				inputTensor.dispose();
+				outputTensor.dispose();
+		
+				// Return result
+				const isAd = prediction[0] > 0.5;
+				const confidence = isAd ? prediction[0] : 1 - prediction[0];
+		
+				return {
+					isAd,
+					text: message.text,
+					label: isAd ? 'Ad' : 'Not Ad',
+					confidence,
+					rawPrediction: prediction[0]
+				};
+			} catch (error) {
+				console.error('Prediction error:', error);
+				return {error: error.message};
+			}
+		};
 
         getPrediction().then(result => {
             console.log('Sending prediction result:', result);
@@ -94,8 +94,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         // Return true to indicate we'll send the response asynchronously
         return true;
-    }
-    
-    // If it's not a recognized message type
-    return false;
+    } else {
+    	// If it's not a recognized message type
+    	return false;
+	}
 });
