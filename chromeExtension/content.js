@@ -73,9 +73,8 @@
         return new Promise((resolve, reject) => {
             const startTime = Date.now();
             chrome.runtime.sendMessage(message, (response) => {
-                const duration = (Date.now() - startTime) / 1000;
+                //const duration = (Date.now() - startTime) / 1000;
                 //console.log(`Message ${message.type} took ${duration.toFixed(2)}s to get response`, response);
-                
                 // Check for error
                 if (chrome.runtime.lastError) {
                     console.error('Runtime error:', chrome.runtime.lastError);
@@ -112,14 +111,14 @@
       
         for (const element of elements) {
             // Skip elements that have already been processed
-            if (element.dataset.adProcessed) continue;
+            if (element?.dataset?.adProcessed) continue;
             element.dataset.adProcessed = 'true';
             
             // Skip tiny elements
             if (element.offsetWidth < 50 || element.offsetHeight < 50) continue;
             
             // Extract text content
-            const text = element.textContent.trim();
+            const text = nodeToString(element);
             
             // Skip elements with no text
             if (!text || text.length < 10) continue;
@@ -150,24 +149,32 @@
             }
         }
       
-        // Report stats to background script
+        //Report stats to background script
         if (stats.detected > 0) {
             try {
-                await sendMessagePromise({
-                    type: 'STATS_UPDATE',
-                    detected: stats.detected,
-                    removed: stats.removed
-                });
-                
-                // Reset stats
-                stats.detected = 0;
-                stats.removed = 0;
+				chrome.runtime.sendMessage({
+					type: 'STATS_UPDATE',
+					detected: stats.detected,
+					removed: stats.removed
+				});
+				
+				// Reset stats
+				stats.detected = 0;
+				stats.removed = 0;
             } catch (error) {
                 console.error('Error updating stats:', error);
             }
         }
     }
-        
+
+	function nodeToString(node) {
+		var tmpNode = document.createElement( "div" );
+		tmpNode.appendChild( node.cloneNode(true) );
+		var str = tmpNode.innerHTML;
+		tmpNode = node = null;
+		return str;
+	}
+
     function setupObserver() {
         // Create observer to detect new content
         const observer = new MutationObserver((mutations) => {
