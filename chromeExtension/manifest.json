@@ -1,10 +1,12 @@
 {
     "manifest_version": 3,
-    "name": "Ad Detector",
+    "name": "Distraction Avoidance Matrix System (DAMS)",
     "version": "0.0.1.0",
     "description": "Detects and removes ads from webpages using TensorFlow.js",
     "permissions": ["storage", "activeTab", "scripting"],
-    "host_permissions": ["<all_urls>"],
+    "host_permissions": [
+        "*://*.dams.ai/*"
+    ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -33,5 +35,11 @@
 						"model/vocabulary.json"], 
         "matches": ["<all_urls>"],
         "extension_ids": []
-      }]
+    }],
+    "icons": {
+        "16": "images/dams16.png",
+        "32": "images/dams32.png",
+        "48": "images/dams48.png",
+        "128": "images/dams128.png"
+    }
 }
