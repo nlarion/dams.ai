@@ -3,7 +3,7 @@
     "name": "Distraction Avoidance Matrix System (DAMS)",
     "version": "0.0.1.0",
     "description": "Detects and removes ads from webpages using TensorFlow.js",
-    "permissions": ["storage", "activeTab", "scripting"],
+    "permissions": ["storage", "activeTab", "scripting", "tabs"],
     "host_permissions": [
         "*://*.dams.ai/*"
     ],
