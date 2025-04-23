@@ -206,6 +206,14 @@
     .submit-btn:hover {
       background-color: #3e8e41;
     }
+    
+    .undo-btn {
+      background-color: #ff9800;
+    }
+    
+    .undo-btn:hover {
+      background-color: #e68a00;
+    }
   </style>
 </head>
 <body>
@@ -256,7 +264,10 @@
       </div>
     </div>
     
-    <button id="resetStats">Reset Statistics</button>
+    <div class="action-buttons" style="margin-top: 15px;">
+      <button id="undoRemoved" class="undo-btn">Undo Recent Removals</button>
+      <button id="resetStats">Reset Statistics</button>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>

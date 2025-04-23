@@ -23,10 +23,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'STATS_UPDATE') {
         // Update statistics
         chrome.storage.local.get(['totalDetected', 'totalRemoved'], (data) => {
-            chrome.storage.local.set({
-                totalDetected: data.totalDetected + message.detected,
-                totalRemoved: data.totalRemoved + message.removed
-            });
+            // If this is an undo operation
+            if (message.undone) {
+                chrome.storage.local.set({
+                    totalRemoved: Math.max(0, data.totalRemoved - message.undone)
+                });
+            } else {
+                chrome.storage.local.set({
+                    totalDetected: data.totalDetected + message.detected,
+                    totalRemoved: data.totalRemoved + message.removed
+                });
+            }
         });
         // No response needed for STATS_UPDATE
         return false;

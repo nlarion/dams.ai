@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const detectedCount = document.getElementById('detected-count');
     const removedCount = document.getElementById('removed-count');
     const resetStatsButton = document.getElementById('resetStats');
+    const undoRemovedButton = document.getElementById('undoRemoved');
     
     // Targeting elements
     const startTargetingButton = document.getElementById('startTargeting');
@@ -58,6 +59,21 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.local.set({ totalDetected: 0, totalRemoved: 0 });
         detectedCount.textContent = '0';
         removedCount.textContent = '0';
+    });
+    
+    // Undo removed elements
+    undoRemovedButton.addEventListener('click', () => {
+        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+            if (tabs[0]) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: 'undoRemovedElements'
+                }, (response) => {
+                    if (response && response.undoneCount) {
+                        console.log(`Undid ${response.undoneCount} element removals`);
+                    }
+                });
+            }
+        });
     });
     
     // Refresh stats every second

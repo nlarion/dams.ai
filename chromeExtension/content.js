@@ -49,7 +49,7 @@
       }
     });
     
-    // Listen for messages from popup for targeting
+    // Listen for messages from popup for targeting and undo
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.action === 'startTargeting') {
             startTargetingMode();
@@ -70,6 +70,10 @@
         } else if (message.action === 'submitSelection') {
             submitTargetedElement();
             sendResponse({ success: true });
+            return true;
+        } else if (message.action === 'undoRemovedElements') {
+            const undoneCount = undoRemovedElements();
+            sendResponse({ success: true, undoneCount });
             return true;
         }
         return false;
@@ -175,6 +179,9 @@
                     // Remove if confidence is above threshold
                     if (result.confidence >= config.confidenceThreshold) {
                         console.log(`Removing ad element with confidence ${result.confidence.toFixed(2)}`);
+                        // Store original display style before hiding
+                        element.dataset.originalDisplay = element.style.display || '';
+                        element.dataset.removedTimestamp = Date.now().toString();
                         element.style.display = 'none';
                         stats.removed++;
                     }
@@ -508,5 +515,48 @@
         }
         
         return `${getElementXPath(element.parentNode)}/${element.tagName.toLowerCase()}[${index}]`;
+    }
+    
+    // Function to undo removed elements
+    function undoRemovedElements() {
+        // Find all elements that have been removed
+        const removedElements = document.querySelectorAll('[data-removed-timestamp]');
+        
+        // Sort by timestamp, most recent first
+        const elementsArray = Array.from(removedElements);
+        elementsArray.sort((a, b) => {
+            return parseInt(b.dataset.removedTimestamp) - parseInt(a.dataset.removedTimestamp);
+        });
+        
+        // Take the most recent 5 elements (or all if less than 5)
+        const elementsToUndo = elementsArray.slice(0, 5);
+        
+        // Restore elements
+        let undoneCount = 0;
+        for (const element of elementsToUndo) {
+            // Restore original display style
+            element.style.display = element.dataset.originalDisplay;
+            
+            // Remove dataset properties
+            delete element.dataset.removedTimestamp;
+            delete element.dataset.originalDisplay;
+            
+            undoneCount++;
+        }
+        
+        // Report stats to background script if any were undone
+        if (undoneCount > 0) {
+            try {
+                stats.removed -= undoneCount;
+                chrome.runtime.sendMessage({
+                    type: 'STATS_UPDATE',
+                    undone: undoneCount
+                });
+            } catch (error) {
+                console.error('Error updating undo stats:', error);
+            }
+        }
+        
+        return undoneCount;
     }
 })();
