@@ -21,18 +21,19 @@
         currentElement: null,
         targetPath: [],
         highlightElement: null,
-        hoverElement: null
+        hoverElement: null,
+        floatingUI: null
     };
     
     // Get configuration from storage
     chrome.storage.local.get(['isEnabled', 'confidenceThreshold'], (data) => {
-      if (data.isEnabled !== undefined) config.isEnabled = data.isEnabled;
-      if (data.confidenceThreshold !== undefined) config.confidenceThreshold = data.confidenceThreshold;
-      
-      // Start detection if enabled
-      if (config.isEnabled) {
-        initDetection();
-      }
+        if (data.isEnabled !== undefined) config.isEnabled = data.isEnabled;
+        if (data.confidenceThreshold !== undefined) config.confidenceThreshold = data.confidenceThreshold;
+
+        // Start detection if enabled
+        if (config.isEnabled) {
+            initDetection();
+        }
     });
     
     // Listen for config changes
@@ -256,11 +257,14 @@
         // Create highlight overlay
         createHighlightOverlay();
         
+        // Create floating UI controls
+        createFloatingControls();
+        
         // Add hover handlers for elements
         document.body.addEventListener('mousemove', handleMouseMove);
         document.body.addEventListener('click', handleElementClick);
         
-        // Add styles for highlighting
+        // Add styles for highlighting and floating UI
         const styleElement = document.createElement('style');
         styleElement.id = 'dams-targeting-styles';
         styleElement.textContent = `
@@ -276,10 +280,205 @@
                 outline: 2px dashed #2196F3 !important;
                 outline-offset: -2px;
             }
+            .dams-floating-ui {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: white;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 12px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                z-index: 2147483647;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 250px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            .dams-floating-ui-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 5px;
+            }
+            .dams-floating-ui-title {
+                font-weight: bold;
+                font-size: 14px;
+                color: #333;
+            }
+            .dams-floating-ui-close {
+                cursor: pointer;
+                color: #777;
+                font-size: 16px;
+            }
+            .dams-floating-ui-element {
+                background-color: #f5f5f5;
+                padding: 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #333;
+            }
+            .dams-floating-ui-controls {
+                display: flex;
+                gap: 8px;
+            }
+            .dams-floating-ui-btn {
+                padding: 6px 12px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 12px;
+                text-align: center;
+                flex: 1;
+                color: white;
+            }
+            .dams-floating-ui-btn:hover {
+                opacity: 0.9;
+            }
+            .dams-btn-narrow {
+                background-color: #2196F3;
+            }
+            .dams-btn-widen {
+                background-color: #2196F3;
+            }
+            .dams-btn-submit {
+                background-color: #4CAF50;
+            }
+            .dams-btn-cancel {
+                background-color: #F44336;
+            }
+            .dams-scope-controls {
+                display: flex;
+                gap: 8px;
+            }
         `;
         document.head.appendChild(styleElement);
         
         console.log('DAMS targeting mode started');
+    }
+    
+    function createFloatingControls() {
+        // Create floating UI element
+        const floatingUI = document.createElement('div');
+        floatingUI.className = 'dams-floating-ui';
+        floatingUI.id = 'dams-floating-ui';
+        
+        // Create header with title and close button
+        const header = document.createElement('div');
+        header.className = 'dams-floating-ui-header';
+        
+        const title = document.createElement('div');
+        title.className = 'dams-floating-ui-title';
+        title.textContent = 'Ad Targeting Mode';
+        
+        const closeBtn = document.createElement('div');
+        closeBtn.className = 'dams-floating-ui-close';
+        closeBtn.textContent = '✕';
+        closeBtn.addEventListener('click', stopTargetingMode);
+        
+        header.appendChild(title);
+        header.appendChild(closeBtn);
+        
+        // Create element display
+        const elementDisplay = document.createElement('div');
+        elementDisplay.className = 'dams-floating-ui-element';
+        elementDisplay.id = 'dams-current-element';
+        elementDisplay.textContent = 'Click on an ad to select it';
+        
+        // Create scope controls
+        const scopeControls = document.createElement('div');
+        scopeControls.className = 'dams-scope-controls';
+        
+        const narrowBtn = document.createElement('button');
+        narrowBtn.className = 'dams-floating-ui-btn dams-btn-narrow';
+        narrowBtn.textContent = 'Narrow';
+        narrowBtn.addEventListener('click', decreaseScopeOfTarget);
+        
+        const widenBtn = document.createElement('button');
+        widenBtn.className = 'dams-floating-ui-btn dams-btn-widen';
+        widenBtn.textContent = 'Widen';
+        widenBtn.addEventListener('click', increaseScopeOfTarget);
+        
+        scopeControls.appendChild(narrowBtn);
+        scopeControls.appendChild(widenBtn);
+        
+        // Create action buttons
+        const actionControls = document.createElement('div');
+        actionControls.className = 'dams-floating-ui-controls';
+        
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'dams-floating-ui-btn dams-btn-cancel';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.addEventListener('click', stopTargetingMode);
+        
+        const submitBtn = document.createElement('button');
+        submitBtn.className = 'dams-floating-ui-btn dams-btn-submit';
+        submitBtn.textContent = 'Submit';
+        submitBtn.addEventListener('click', submitTargetedElement);
+        
+        actionControls.appendChild(cancelBtn);
+        actionControls.appendChild(submitBtn);
+        
+        // Add all elements to the floating UI
+        floatingUI.appendChild(header);
+        floatingUI.appendChild(elementDisplay);
+        floatingUI.appendChild(scopeControls);
+        floatingUI.appendChild(actionControls);
+        
+        // Make the floating UI draggable
+        makeElementDraggable(floatingUI);
+        
+        // Add to the page
+        document.body.appendChild(floatingUI);
+        
+        // Store reference to the floating UI
+        targeting.floatingUI = floatingUI;
+    }
+    
+    function makeElementDraggable(element) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        
+        const header = element.querySelector('.dams-floating-ui-header');
+        if (header) {
+            header.onmousedown = dragMouseDown;
+        } else {
+            element.onmousedown = dragMouseDown;
+        }
+        
+        function dragMouseDown(e) {
+            e.preventDefault();
+            // Get the mouse cursor position at startup
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // Call a function whenever the cursor moves
+            document.onmousemove = elementDrag;
+        }
+        
+        function elementDrag(e) {
+            e.preventDefault();
+            // Calculate the new cursor position
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // Set the element's new position
+            element.style.top = (element.offsetTop - pos2) + "px";
+            element.style.left = (element.offsetLeft - pos1) + "px";
+            element.style.bottom = "auto";
+            element.style.right = "auto";
+        }
+        
+        function closeDragElement() {
+            // Stop moving when mouse button is released
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
     }
     
     function stopTargetingMode() {
@@ -292,6 +491,12 @@
         if (targeting.highlightElement) {
             document.body.removeChild(targeting.highlightElement);
             targeting.highlightElement = null;
+        }
+        
+        // Remove floating UI
+        if (targeting.floatingUI) {
+            document.body.removeChild(targeting.floatingUI);
+            targeting.floatingUI = null;
         }
         
         // Remove hover effect
@@ -345,9 +550,11 @@
         event.preventDefault();
         event.stopPropagation();
         
-        // Get clicked element
+        // Get clicked element, but avoid clicking the floating UI itself
         let element = document.elementFromPoint(event.clientX, event.clientY);
-        if (!element || element.classList.contains('dams-highlight')) return;
+        if (!element || 
+            element.classList.contains('dams-highlight') || 
+            element.closest('.dams-floating-ui')) return;
         
         // Set as current target
         targeting.currentElement = element;
@@ -358,10 +565,40 @@
         // Update highlight
         updateHighlight();
         
+        // Update element display in floating UI
+        updateFloatingUIElementDisplay();
+        
         // Send info to popup
         sendElementInfoToPopup();
         
         return false;
+    }
+    
+    function updateFloatingUIElementDisplay() {
+        if (!targeting.currentElement || !targeting.floatingUI) return;
+        
+        const elementDisplayDiv = targeting.floatingUI.querySelector('#dams-current-element');
+        if (!elementDisplayDiv) return;
+        
+        const { tagName, id, className } = targeting.currentElement;
+        let displayText = tagName.toLowerCase();
+        
+        if (id) {
+            displayText += `#${id}`;
+        }
+        
+        if (className) {
+            const classes = className.split(' ').filter(c => c.trim());
+            if (classes.length > 0) {
+                displayText += `.${classes[0]}`;
+                
+                if (classes.length > 1) {
+                    displayText += `+${classes.length - 1}`;
+                }
+            }
+        }
+        
+        elementDisplayDiv.textContent = displayText;
     }
     
     function buildElementPath(element) {
@@ -410,6 +647,9 @@
         // Update highlight
         updateHighlight();
         
+        // Update element display in floating UI
+        updateFloatingUIElementDisplay();
+        
         // Send info to popup
         sendElementInfoToPopup();
     }
@@ -441,6 +681,9 @@
             
             // Update highlight
             updateHighlight();
+            
+            // Update element display in floating UI
+            updateFloatingUIElementDisplay();
             
             // Send info to popup
             sendElementInfoToPopup();
