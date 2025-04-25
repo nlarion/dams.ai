@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // DIV TARGETING FUNCTIONALITY
     
-    // Start targeting mode
+    // Start targeting mode - simplified to just send a message to content script
     startTargetingButton.addEventListener('click', () => {
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             if (tabs[0]) {
@@ -97,10 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Update UI
                 startTargetingButton.style.display = 'none';
                 stopTargetingButton.style.display = 'block';
-                scopeControls.style.display = 'block';
                 
-                // Listen for messages from content script
+                // Listen for messages from targeting script
                 chrome.runtime.onMessage.addListener(handleTargetingMessages);
+                
+                // Close the popup to give user full view of the page
+                window.close();
             }
         });
     });
@@ -125,52 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Decrease scope (narrow selection)
-    decreaseScopeButton.addEventListener('click', () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            if (tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    action: 'decreaseScope'
-                });
-            }
-        });
-    });
-    
-    // Increase scope (widen selection)
-    increaseScopeButton.addEventListener('click', () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            if (tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    action: 'increaseScope'
-                });
-            }
-        });
-    });
-    
-    // Submit the selected element
-    submitSelectionButton.addEventListener('click', () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            if (tabs[0]) {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    action: 'submitSelection'
-                });
-                
-                // Reset UI
-                startTargetingButton.style.display = 'block';
-                stopTargetingButton.style.display = 'none';
-                scopeControls.style.display = 'none';
-                currentElementSpan.textContent = 'No element selected';
-                
-                // Remove message listener
-                chrome.runtime.onMessage.removeListener(handleTargetingMessages);
-            }
-        });
-    });
-    
     // Handle messages from content script during targeting
     function handleTargetingMessages(message, sender, sendResponse) {
         if (message.type === 'targetingUpdate') {
-            // Update the current element display
+            // Update the current element display in the popup
             if (message.elementInfo) {
                 const { tagName, className, id } = message.elementInfo;
                 let displayText = tagName.toLowerCase();
@@ -191,11 +151,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
                 currentElementSpan.textContent = displayText;
+                
+                // Show controls but note they're not needed because UI is on the page
+                scopeControls.style.display = 'block';
             } else {
                 currentElementSpan.textContent = 'No element selected';
             }
             
             return true; // Keep the message channel open for sendResponse
+        } else if (message.type === 'targetingComplete') {
+            // Targeting completed (either by submission or cancellation)
+            startTargetingButton.style.display = 'block';
+            stopTargetingButton.style.display = 'none';
+            scopeControls.style.display = 'none';
+            currentElementSpan.textContent = 'No element selected';
+            
+            // Remove message listener
+            chrome.runtime.onMessage.removeListener(handleTargetingMessages);
+            
+            return true;
+        } else if (message.type === 'ELEMENT_SUBMITTED') {
+            // Element was submitted from the page interface
+            console.log('Element submitted:', message.element);
+            
+            // Reset UI
+            startTargetingButton.style.display = 'block';
+            stopTargetingButton.style.display = 'none';
+            scopeControls.style.display = 'none';
+            currentElementSpan.textContent = 'No element selected';
+            
+            // Remove message listener
+            chrome.runtime.onMessage.removeListener(handleTargetingMessages);
+            
+            return true;
         }
     }
 });
