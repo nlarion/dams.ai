@@ -1,0 +1,63 @@
+dataset_system_prompt: "You are an expert in web development and online advertising. Generate realistic HTML snippets for training an ad detection classifier."
+
+topic_tree:
+  topic_prompt: "HTML elements and structures for web ad detection training"
+  topic_system_prompt: "You are an expert in web development. Generate diverse topics covering both advertisement HTML patterns and regular web content structures."
+  degree: 3
+  depth: 2
+  temperature: 0.7
+  provider: "openai"
+  model: "gpt-4o"
+  save_as: "ad_detection_topics.jsonl"
+
+data_engine:
+  instructions: |
+    Generate a realistic HTML snippet example based on the given topic.
+
+    IMPORTANT: Your response MUST follow this exact format:
+
+    1. Provide ONE complete HTML snippet enclosed in ```html``` code blocks
+    2. After the HTML, clearly state: Classification: is_ad: [true or false]
+    3. If it's an ad (is_ad: true), also specify: Ad Type: [banner/sidebar/inline/sponsored/native]
+
+    For advertisement examples, create HTML that includes:
+    - Common ad container classes (ad, advertisement, sponsored, promo, ad-banner, etc.)
+    - Ad network placeholders (google-adsense, doubleclick, etc.)
+    - Promotional content with CTAs
+    - Tracking attributes (data-ad-id, data-campaign, etc.)
+
+    For non-advertisement examples, create HTML for:
+    - Navigation menus (nav, menu classes)
+    - Article content (article, post, content classes)
+    - User comments (comment, review classes)
+    - Form elements (form, input, button)
+    - Footer sections (footer, copyright)
+    - Regular images/videos (without promotional content)
+
+    Example format:
+    ```html
+    <div class="example">content here</div>
+    ```
+    Classification: is_ad: false
+  generation_system_prompt: "You are an HTML expert. Generate clean, realistic HTML snippets and classify them correctly for ad detection training."
+  provider: "openai"
+  model: "gpt-4o"
+  temperature: 0.8
+  max_retries: 3
+
+dataset:
+  creation:
+    num_steps: 3
+    batch_size: 3
+    provider: "openai"
+    model: "gpt-4o"
+    sys_msg: true
+  save_as: "dataset2_raw.jsonl"
+  format: "jsonl"
+
+# Custom formatter to convert to structured format
+formatter:
+  type: "custom"
+  path: "./ad_detection_formatter.py"
+  class_name: "AdDetectionFormatter"
+  output_file: "dataset2.json"

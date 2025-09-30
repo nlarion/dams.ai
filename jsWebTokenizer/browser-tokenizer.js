@@ -28,7 +28,7 @@ class NLPTokenizer {
         reader.onload = (event) => {
           try {
             const jsonData = JSON.parse(event.target.result);
-            
+            debugger;
             // Determine the structure of the JSON
             let corpus = [];
             
@@ -37,7 +37,7 @@ class NLPTokenizer {
               corpus = jsonData.flatMap(x=>x.corpus);
             } else if (typeof jsonData === 'object') {
               // Try to find text fields to extract
-              const possibleFields = ['text', 'content', 'corpus', 'documents', 'sentences'];
+              const possibleFields = ['text', 'content', 'corpus', 'documents', 'sentences', 'labels'];
               
               for (const field of possibleFields) {
                 if (jsonData[field] && Array.isArray(jsonData[field])) {

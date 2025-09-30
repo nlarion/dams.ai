@@ -1,0 +1,56 @@
+[
+  {
+    "html": "<div class=\"content\">\n <h2>Latest News in Tech</h2>\n <p>Stay updated with the latest in the tech world. Discover new gadgets and innovations.</p>\n <div class=\"sponsored-content\" data-ad-id=\"12345\" data-campaign=\"tech-trends\">\n <h3>Sponsored: Top 5 Gadgets of 2023</h3>\n <p>Check out these must-have gadgets that are changing the tech landscape.</p>\n <a href=\"https://example.com/gadgets\" class=\"cta-button\">Learn More</a>\n </div>\n <p>Join our newsletter for more updates.</p>\n</div>",
+    "is_ad": true,
+    "ad_type": "native",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\">\n <img src=\"https://example.com/banner-ad.jpg\" alt=\"Advertisement\" width=\"728\" height=\"90\">\n <div class=\"ad-content\">\n <p>Don't miss out on our exclusive offer! <a href=\"https://example.com/offer\">Click here</a> to learn more.</p>\n </div>\n <script type=\"text/javascript\" src=\"https://ads.network.com/ad.js\" data-ad-id=\"12345\" data-campaign=\"summer-sale\"></script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"video-ad-wrapper\">\n <div class=\"ad-player\" data-ad-id=\"12345\" data-campaign=\"summer-sale\">\n <video controls poster=\"placeholder.jpg\">\n <source src=\"https://example.com/video.mp4\" type=\"video/mp4\">\n Your browser does not support the video tag.\n </video>\n <div class=\"ad-details\">\n <p class=\"promo-text\">Summer Sale! Get 50% off on all items. <a href=\"https://example.com/shop\">Shop Now</a></p>\n <span class=\"sponsored\">Sponsored Ad</span>\n </div>\n </div>\n <div class=\"ad-tracking\" data-ad-network=\"doubleclick\">\n <!-- Ad tracking script goes here -->\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" data-ad-id=\"12345\" data-campaign=\"summer-sale\">\n <a href=\"https://www.example.com/sale\" target=\"_blank\">\n <img src=\"https://www.example.com/images/summer-sale-banner.jpg\" alt=\"Summer Sale - Up to 50% off!\">\n <div class=\"ad-content\">\n <h2>Summer Sale!</h2>\n <p>Don't miss out on our biggest sale of the season. Up to 50% off on all items!</p>\n <button class=\"cta-button\">Shop Now</button>\n </div>\n </a>\n <div class=\"ad-network\" id=\"google-adsense\"></div>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"content-item native-ad\" data-ad-id=\"2345\" data-campaign=\"spring-sale\">\n <h3>This Gadget Will Change Your Life!</h3>\n <img src=\"images/gadget.jpg\" alt=\"Innovative Gadget\">\n <p>Discover the latest innovation in tech\u2014<a href=\"#\">Read more</a></p>\n <button class=\"cta-button\">Shop Now</button>\n</div>",
+    "is_ad": true,
+    "ad_type": "native",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"video-ad-container ad ad-banner\">\n <video controls poster=\"/path/to/video-thumbnail.jpg\">\n <source src=\"/path/to/video.mp4\" type=\"video/mp4\">\n Your browser does not support the video tag.\n </video>\n <div class=\"ad-overlay\">\n <a href=\"https://click-through-link.com\" target=\"_blank\"\n class=\"ad-cta\" data-ad-id=\"12345\" data-campaign=\"summer_sale\">\n <button>Watch Now</button>\n </a>\n </div>\n <div class=\"ad-network-tag\">\n <!-- Placeholder for ad network script -->\n <script src=\"https://example-ad-network.com/ad.js\"></script>\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "generic",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" data-ad-id=\"123456\" data-campaign=\"summer-sale\">\n <script src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:block\"\n data-ad-client=\"ca-pub-123456789\"\n data-ad-slot=\"987654321\"\n data-ad-format=\"auto\"\n data-full-width-responsive=\"true\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "confidence": 0.95
+  },
+  {
+    "html": "<article class=\"content\">\n <header>\n <h1>Understanding the Impact of Renewable Energy</h1>\n <p>By Jane Doe - March 25, 2023</p>\n </header>\n <p>Renewable energy sources have been increasingly important in...</p>\n <!-- Native Ad Start -->\n <div class=\"content native-ad\" data-ad-id=\"12345\" data-campaign=\"earth-friendly\">\n <h2>Sponsored: Clean Energy Solutions for a Greener Planet</h2>\n <p>Explore the latest innovations in renewable energy and discover how you can make a difference...</p>\n <a href=\"#\" class=\"cta-button\">Learn More</a>\n </div>\n <!-- Native Ad End -->\n <p>Furthermore, investments in solar and wind technologies...</p>\n</article>",
+    "is_ad": true,
+    "ad_type": "native",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"video-ad-container\">\n <div class=\"ad-header\">Sponsored Video</div>\n <video class=\"ad-video\" controls data-ad-id=\"12345\" data-campaign=\"summer2023\">\n <source src=\"https://example.com/ads/video-ad.mp4\" type=\"video/mp4\">\n Your browser does not support the video tag.\n </video>\n <div class=\"ad-footer\">\n <a href=\"https://advertiser.com\" class=\"cta-button\" target=\"_blank\">Learn More</a>\n <img src=\"https://example.com/tracking-pixel.gif\" alt=\"Tracking Pixel\" style=\"display:none;\">\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "confidence": 0.95
+  }
+]
