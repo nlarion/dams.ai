@@ -1,0 +1,58 @@
+[
+  {
+    "html": "<div class=\"gaming-ad-banner\" id=\"promo-ad-320x50\" data-ad-id=\"promo123\" data-tracking=\"click-tracker\">\n <style>\n .gaming-ad-banner { width: 320px; height: 50px; border: 1px solid #000; }\n .ad-content { display: flex; justify-content: center; align-items: center; background-color: #1a1a1a; color: #fff; }\n .cta-button { background-color: #ff0000; padding: 5px 10px; color: #fff; text-decoration: none; border-radius: 3px; }\n </style>\n <div class=\"ad-content\">\n <span>Unlock Exclusive Skins!</span>\n <a href=\"#\" class=\"cta-button\">Buy Now</a>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <script>\n window.googletag = window.googletag || {cmd: []};\n googletag.cmd.push(function() {\n googletag.pubads().enableSingleRequest();\n googletag.enableServices();\n });\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "gaming",
+    "confidence": 0.95
+  },
+  {
+    "html": "<!-- Example of a Gaming Website Ad -->\n<div class=\"ad-banner\" id=\"game-promo-ad\" data-ad-id=\"g12345\" data-tracking=\"true\">\n <style>\n .ad-banner { \n width: 320px; \n height: 50px; \n background-color: #111; \n color: #fff; \n border: 2px solid #333; \n text-align: center;\n font-family: 'Arial', sans-serif;\n }\n .ad-content { \n padding: 5px; \n }\n .cta-button {\n display: inline-block;\n margin-top: 10px;\n padding: 5px 10px;\n background-color: #f00;\n color: #fff;\n text-decoration: none;\n border-radius: 5px;\n }\n </style>\n <div class=\"ad-content\">\n <img src=\"game-banner.jpg\" alt=\"Limited Time Offer!\" style=\"max-width: 100%;\">\n <a href=\"#\" class=\"cta-button\">Unlock Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" data-ad-client=\"ca-pub-1234567890\" data-ad-slot=\"123456\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "gaming",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" id=\"promo-banner-160x600\" data-ad-id=\"game-ad-001\" data-tracking=\"ad-tracker-99\">\n <style>\n .ad-banner {\n width: 160px;\n height: 600px;\n border: 1px solid #ccc;\n background-color: #f9f9f9;\n position: relative;\n overflow: hidden;\n }\n .ad-content {\n padding: 20px;\n font-family: 'Arial', sans-serif;\n color: #333;\n }\n .ad-image {\n width: 100%;\n height: auto;\n }\n .ad-cta {\n background-color: #ff4500;\n color: #ffffff;\n padding: 10px 15px;\n text-align: center;\n text-decoration: none;\n display: block;\n margin-top: 10px;\n border-radius: 5px;\n transition: background-color 0.3s ease;\n }\n .ad-cta:hover {\n background-color: #e03c00;\n }\n </style>\n <div class=\"ad-content\">\n <img src=\"game-promo.jpg\" alt=\"Exclusive Gaming Offer\" class=\"ad-image\">\n <a href=\"#\" class=\"ad-cta\">Unlock Special Offer</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n data-ad-client=\"ca-pub-987654321\"\n style=\"display:inline-block;width:160px;height:600px\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "sidebar",
+    "domain": "gaming",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"hero-image-ad-container\" id=\"hero-ad-300x250\" data-ad-id=\"hero123\" data-campaign=\"hero-skin-sale\">\n <style>\n .hero-image-ad-container {\n width: 300px;\n height: 250px;\n border: 2px solid #aaa;\n overflow: hidden;\n margin: 20px auto;\n background-color: #f2f2f2;\n }\n .hero-ad-content {\n position: relative;\n width: 100%;\n height: 100%;\n }\n .hero-ad-content img {\n width: 100%;\n height: auto;\n }\n .cta-button {\n position: absolute;\n bottom: 10px;\n right: 10px;\n padding: 5px 10px;\n background-color: #ff4500;\n color: #fff;\n text-decoration: none;\n border-radius: 5px;\n font-weight: bold;\n font-size: 14px;\n }\n </style>\n <div class=\"hero-ad-content\">\n <img src=\"hero-skin.jpg\" alt=\"Unlock New Hero Skin\">\n <a href=\"#\" class=\"cta-button\">Unlock Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" data-ad-client=\"ca-pub-987654321\"></ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "domain": "gaming",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"gaming-ad-banner\" id=\"ad-sidebar-300x250\" data-ad-id=\"67890\" data-campaign=\"battle-pass-promo\">\n <style>\n .gaming-ad-banner { width: 300px; height: 250px; border: 1px solid #ccc; }\n .gaming-ad-content { padding: 15px; background: #fafafa; text-align: center; }\n .gaming-cta { display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4500; color: #fff; text-decoration: none; }\n </style>\n <div class=\"gaming-ad-content\">\n <img src=\"battle-pass.jpg\" alt=\"Battle Pass Promo\">\n <a href=\"#\" class=\"gaming-cta\">Get Now!</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" style=\"display:block\" data-ad-client=\"ca-pub-123456\" data-ad-slot=\"1234567890\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": null,
+    "domain": "gaming",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner-container\" id=\"game-ad-160x600\" data-ad-id=\"game123\" data-campaign=\"new-release\">\n <style>\n .ad-banner-container { width: 160px; height: 600px; border: 1px solid #ccc; position: relative; }\n .ad-banner { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }\n .game-logo { width: 120px; margin-bottom: 10px; }\n .cta-button { background-color: #ff4500; color: #fff; padding: 10px 15px; border: none; border-radius: 5px; text-decoration: none; font-weight: bold; }\n </style>\n <div class=\"ad-banner\">\n <img src=\"game-logo.png\" alt=\"Game Logo\" class=\"game-logo\">\n <a href=\"#\" class=\"cta-button\">Play Now</a>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:block\"\n data-ad-client=\"ca-games-123456\"\n data-ad-slot=\"7891011\"\n data-ad-format=\"auto\">\n </ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "sidebar",
+    "domain": "gaming",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" id=\"banner-ad-300x250\" data-ad-id=\"game-promo-54321\" data-campaign=\"winter-sale\">\n <style>\n .ad-banner { width: 300px; height: 250px; border: 1px solid #ccc; margin: 10px auto; }\n .ad-content { text-align: center; background-color: #f4f4f4; padding: 15px; }\n .ad-content img { max-width: 100%; height: auto; }\n .cta-button { display: inline-block; padding: 10px 20px; background-color: #ff5500; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px; }\n </style>\n <div class=\"ad-content\">\n <img src=\"promo-banner.jpg\" alt=\"Game Sale\">\n <p>Unlock exclusive content now!</p>\n <a href=\"#\" class=\"cta-button\">Get the Deal</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" style=\"display:inline-block;width:300px;height:250px\" data-ad-client=\"ca-pub-123456\" data-ad-slot=\"7890123\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "gaming",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"game-ad-banner\" id=\"ad-slot-300x250\" data-ad-id=\"98765\" data-campaign=\"exclusive-offer\">\n <style>\n .game-ad-banner { width: 300px; height: 250px; border: 1px solid #ccc; position: relative; }\n .ad-content { padding: 15px; text-align: center; background-color: #f8f8f8; }\n .cta-button { display: inline-block; margin-top: 10px; padding: 8px 15px; background-color: #007bff; color: #fff; border-radius: 5px; text-decoration: none; }\n </style>\n <div class=\"ad-content\">\n <img src=\"game-offer.jpg\" alt=\"Unlock Special Items\">\n <a href=\"#\" class=\"cta-button\">Unlock Now</a>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <script>\n window.googletag = window.googletag || {cmd: []};\n googletag.cmd.push(function() {\n googletag.defineSlot('/6355419/Travel/Europe', [300, 250], 'ad-slot-300x250').addService(googletag.pubads());\n googletag.enableServices();\n });\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "gaming",
+    "confidence": 0.95
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "html": "<div class=\"product-carousel\">\n <div class=\"carousel-item\">\n <img src=\"https://example.com/product1.jpg\" alt=\"Product 1\">\n <p>Product 1 Description</p>\n <p>$19.99</p>\n <button class=\"buy-now\">Buy Now</button>\n </div>\n <div class=\"carousel-item\">\n <img src=\"https://example.com/product2.jpg\" alt=\"Product 2\">\n <p>Product 2 Description</p>\n <p>$29.99</p>\n <button class=\"buy-now\">Buy Now</button>\n </div>\n <div class=\"carousel-item\">\n <img src=\"https://example.com/product3.jpg\" alt=\"Product 3\">\n <p>Product 3 Description</p>\n <p>$39.99</p>\n <button class=\"buy-now\">Buy Now</button>\n </div>\n</div>",
+    "is_ad": false,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div id=\"promoPopup\" class=\"popup ad-banner\" style=\"display:none;\">\n <div class=\"popup-content\">\n <span class=\"close\">&times;</span>\n <h2>Special Offer Just For You!</h2>\n <p>Sign up today and receive an exclusive 20% discount on your first order.</p>\n <button class=\"cta-button\">Sign Up Now</button>\n </div>\n <script>\n window.onload = function() {\n setTimeout(function() {\n document.getElementById('promoPopup').style.display = 'block';\n }, 5000); // Display after 5 seconds\n };\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner hero-banner\" data-ad-id=\"12345\" data-campaign=\"summer-sale\">\n <img src=\"images/summer-sale.jpg\" alt=\"Summer Sale Banner\" class=\"banner-image\" />\n <div class=\"banner-content\">\n <h1>Summer Sale Extravaganza</h1>\n <p>Up to 50% Off on Selected Items</p>\n <a href=\"https://example.com/shop-now\" class=\"cta-button\">Shop Now</a>\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\">\n <img src=\"https://example.com/images/sale-banner.jpg\" alt=\"Big Sale Banner\" class=\"banner-image\"/>\n <div class=\"ad-content\">\n <h2>Big Savings Event!</h2>\n <p>Up to 70% off on select products. Limited time offer!</p>\n <a href=\"https://example.com/shop\" class=\"shop-now-btn\">Shop Now</a>\n </div>\n <span class=\"promo\">Sponsored</span>\n <div class=\"tracking-data\" data-ad-id=\"12345\" data-campaign=\"summer-sale\"></div>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" data-campaign=\"fall-sale\" data-ad-id=\"12345\">\n <img src=\"https://example.com/banner-fall-sale.jpg\" alt=\"Fall Sale Banner\" class=\"banner-image\">\n <div class=\"banner-content\">\n <h1>Exclusive Fall Sale!</h1>\n <p>Save up to 40% on all items</p>\n <button class=\"cta-button\" onclick=\"window.location.href='https://example.com/shop'\">Shop Now</button>\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"hero-banner ad-banner\" data-ad-id=\"12345\" data-campaign=\"summer-sale\">\n <img src=\"https://example.com/images/banner.jpg\" alt=\"Summer Collection\" class=\"banner-image\">\n <div class=\"banner-content\">\n <h2>Summer Collection Sale!</h2>\n <p>Up to 50% off on all items. Limited time offer.</p>\n <a href=\"https://example.com/shop\" class=\"btn btn-primary\">Shop Now</a>\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"promo-popup\" data-ad-id=\"12345\" data-campaign=\"summer-sale\">\n <div class=\"popup-header\">\n <h2>Exclusive Offer Just for You!</h2>\n <button class=\"close-btn\">&times;</button>\n </div>\n <div class=\"popup-content\">\n <p>Don't miss out on our summer sale! Enjoy <strong>25% off</strong> on all items.</p>\n <a href=\"https://example.com/shop\" class=\"cta-button\">Shop Now</a>\n </div>\n <div class=\"popup-footer\">\n <small>Use code: SUMMER25 at checkout. Offer ends soon!</small>\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"promo-popup\" id=\"promo-123\" style=\"display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:300px; padding:20px; background-color:white; box-shadow:0 0 10px rgba(0,0,0,0.5);\">\n <button class=\"close-popup\" style=\"position:absolute; top:10px; right:10px; border:none; background:none; font-size:18px;\">&times;</button>\n <h2>Exclusive Offer!</h2>\n <p>Sign up today and receive a 20% discount on your first purchase.</p>\n <button class=\"cta-button\" style=\"margin-top:10px; padding:10px 20px; background-color:#ff6700; border:none; color:white; cursor:pointer;\">Sign Up Now</button>\n</div>\n<script>\n setTimeout(() => {\n document.getElementById('promo-123').style.display = 'block';\n }, 5000); // Popup appears after 5 seconds\n</script>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  }
+]

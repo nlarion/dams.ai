@@ -150,7 +150,14 @@ The model achieves high accuracy on the sample dataset:
 
 ## 📝 License
 
-MIT
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
+
+See [LICENSE.md](LICENSE.md) for full license text.
+
+**Summary:**
+- ✅ You can use, share, and modify this work for non-commercial purposes
+- ✅ You must give appropriate credit and indicate if changes were made
+- ❌ You cannot use this work for commercial purposes without permission
 
 ## 🤝 Contributing
 
@@ -158,6 +165,6 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ## 📧 Contact
 
-Your Name - [@nlarion](https://twitter.com/nlarion) - neil.larion@gmail.com
+Neil Larion - [@nlarion](https://twitter.com/nlarion) - [dude@neillarion.com](mailto:dude@neillarion.com) - [website](https://www.neillarion.com)
 
 Project Link: [https://www.dams.ai](https://www.dams.ai)

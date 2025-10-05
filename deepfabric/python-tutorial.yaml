@@ -1,8 +1,12 @@
-dataset_system_prompt: "You are an expert in web development and online advertising. Generate realistic HTML snippets for training an ad detection classifier."
+dataset_system_prompt: "You are an expert in web development and online advertising. Generate realistic HTML, CSS, and JavaScript code snippets for training an ML ad detection classifier that analyzes HTML structure, CSS classes, and JavaScript ad network patterns."
+
+# Domain configuration
+# Supported domains: general, e-commerce, news, social-media, gaming, finance, travel, healthcare, education, entertainment, sports
+domain: "general"
 
 topic_tree:
-  topic_prompt: "HTML elements and structures for web ad detection training"
-  topic_system_prompt: "You are an expert in web development. Generate diverse topics covering both advertisement HTML patterns and regular web content structures."
+  topic_prompt: "HTML/CSS/JavaScript elements and structures for {DOMAIN} web ad detection training. Focus on {DOMAIN}-specific DOM patterns, CSS classes, and ad network code."
+  topic_system_prompt: "You are an expert in web development and {DOMAIN} websites. Generate diverse topics covering both advertisement HTML/CSS/JavaScript patterns (ad containers, tracking scripts, ad network code) and regular web content structures specific to {DOMAIN} websites."
   degree: 3
   depth: 2
   temperature: 0.7
@@ -12,34 +16,86 @@ topic_tree:
 
 data_engine:
   instructions: |
-    Generate a realistic HTML snippet example based on the given topic.
+    🎯 PRIMARY GOAL: Generate realistic HTML, CSS, and JavaScript code for training ML models to detect ads by analyzing HTML structure.
 
-    IMPORTANT: Your response MUST follow this exact format:
+    Generate a realistic HTML example based on the given topic for {DOMAIN} websites.
 
-    1. Provide ONE complete HTML snippet enclosed in ```html``` code blocks
-    2. After the HTML, clearly state: Classification: is_ad: [true or false]
-    3. If it's an ad (is_ad: true), also specify: Ad Type: [banner/sidebar/inline/sponsored/native]
+    IMPORTANT: Your response MUST follow this format:
 
-    For advertisement examples, create HTML that includes:
-    - Common ad container classes (ad, advertisement, sponsored, promo, ad-banner, etc.)
-    - Ad network placeholders (google-adsense, doubleclick, etc.)
-    - Promotional content with CTAs
-    - Tracking attributes (data-ad-id, data-campaign, etc.)
+    Generate realistic HTML/CSS/JavaScript snippets that an ML model will analyze to detect ads.
 
-    For non-advertisement examples, create HTML for:
-    - Navigation menus (nav, menu classes)
-    - Article content (article, post, content classes)
-    - User comments (comment, review classes)
-    - Form elements (form, input, button)
-    - Footer sections (footer, copyright)
-    - Regular images/videos (without promotional content)
+    1. Provide ONE complete HTML snippet with inline CSS styles or <style> tags and/or <script> tags if relevant
+    2. Include realistic CSS class names, IDs, and attributes that are commonly used in {DOMAIN} websites
+    3. For ads: Include common ad network code (Google AdSense, DoubleClick), tracking pixels, data attributes
+    4. For non-ads: Include typical website elements without promotional markup
+    5. Enclose in ```html``` code blocks
+    6. After the HTML, clearly state: Classification: is_ad: [true or false]
+    7. If it's an ad (is_ad: true), also specify: Ad Type: [banner/sidebar/inline/sponsored/native]
 
-    Example format:
+    DOMAIN-SPECIFIC PATTERNS FOR {DOMAIN}:
+
+    E-COMMERCE: Product cards, discount banners, shopping cart promos, "Buy Now" CTAs, price highlights, limited-time offers, product recommendations
+    NEWS: Native ads disguised as articles, sponsored content, sidebar story recommendations, "Recommended for you", newsletter signups
+    SOCIAL-MEDIA: Promoted posts, sponsored stories, feed advertisements, "Suggested for you", boosted content, influencer partnerships
+    GAMING: In-game offers, battle pass promos, currency purchases, loot box ads, character unlocks, seasonal events, "Limited Edition" items
+    FINANCE: Investment offers, credit card ads, loan promotions, trading platforms, insurance quotes, financial advisors, "Start Investing" CTAs
+    TRAVEL: Hotel deals, flight offers, vacation packages, booking.com style ads, "Book Now" CTAs, destination promotions, travel insurance
+    HEALTHCARE: Medical services, insurance ads, wellness products, telemedicine promos, prescription drug ads, health screening offers
+    EDUCATION: Course promotions, webinar ads, educational tools, certification programs, "Enroll Now" CTAs, learning platform ads
+    ENTERTAINMENT: Streaming service ads, movie promotions, event tickets, concert announcements, "Watch Now" CTAs, subscription offers
+    SPORTS: Merchandise, ticket sales, betting promotions, fantasy sports, team gear, "Get Tickets" CTAs, sports streaming services
+
+    For advertisement examples (HTML/CSS/JavaScript), create content that includes:
+    - Common ad container classes (ad, advertisement, sponsored, promo, ad-banner, sidebar-ad, etc.)
+    - Inline CSS styles or <style> blocks with ad-specific styling
+    - Ad network placeholders (google-adsense, doubleclick, adsbygoogle, etc.)
+    - JavaScript ad loading code (<script> tags for ad networks)
+    - Promotional content with CTAs relevant to {DOMAIN}
+    - Tracking attributes (data-ad-id, data-campaign, data-tracking, etc.)
+    - Common ad dimensions (300x250, 728x90, 160x600, 320x50)
+    - Ad-specific div IDs (#ad-slot, #banner-ad, #sponsored-content)
+    - iframes for third-party ad content
+    - Tracking pixels and analytics code
+
+    For non-advertisement examples (HTML/CSS/JavaScript), create content for:
+    - Navigation menus (nav, menu, header classes) with standard styling
+    - Article content (article, post, content, main classes)
+    - User comments (comment, review, feedback classes)
+    - Form elements (form, input, button, select) with standard markup
+    - Footer sections (footer, copyright, site-info)
+    - Regular images/videos (without promotional content or tracking)
+    - Standard page elements without ad network code or tracking pixels
+
+    Example HTML format with CSS/JavaScript (AD):
     ```html
-    <div class="example">content here</div>
+    <div class="ad-container" id="ad-slot-728x90" data-ad-id="12345" data-campaign="summer-sale">
+      <style>
+        .ad-container { width: 728px; height: 90px; border: 1px solid #ddd; }
+        .ad-content { padding: 10px; background: #fff; }
+      </style>
+      <div class="ad-content">
+        <img src="banner.jpg" alt="Sale">
+        <a href="#" class="cta-button">Shop Now</a>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <ins class="adsbygoogle" data-ad-client="ca-pub-123456"></ins>
+    </div>
+    ```
+    Classification: is_ad: true
+    Ad Type: banner
+
+    Example HTML format (NON-AD):
+    ```html
+    <nav class="main-navigation">
+      <ul class="nav-menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
     ```
     Classification: is_ad: false
-  generation_system_prompt: "You are an HTML expert. Generate clean, realistic HTML snippets and classify them correctly for ad detection training."
+  generation_system_prompt: "You are an expert in {DOMAIN} websites and ad content. Generate realistic HTML/CSS/JavaScript code with proper DOM structure, CSS classes, and ad network patterns that ML models can analyze. Classify all examples correctly for ad detection training."
   provider: "openai"
   model: "gpt-4o"
   temperature: 0.8

@@ -1,0 +1,58 @@
+[
+  {
+    "html": "<div class=\"ad-banner promo\" id=\"banner-ad-300x250\" data-ad-id=\"ad6789\" data-campaign=\"black-friday-promo\">\n <style>\n .ad-banner {\n width: 300px; \n height: 250px; \n border: 1px solid #ccc; \n position: relative;\n background-color: #f8f8f8; \n text-align: center;\n }\n .promo-content {\n margin: 10px; \n font-family: 'Arial', sans-serif;\n color: #333;\n }\n .cta-button {\n padding: 10px 20px; \n background-color: #ff4500; \n color: white; \n text-decoration: none; \n border-radius: 5px;\n }\n </style>\n <div class=\"promo-content\">\n <img src=\"promo-banner.png\" alt=\"Huge Discount\" style=\"width:100%;\">\n <a href=\"#\" class=\"cta-button\">Grab Your Deal Now!</a>\n <!-- Ad network integration -->\n <script async src=\"https://example.com/ad/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" data-ad-client=\"ca-pub-1234567890\"></ins>\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<!-- Example HTML Structure -->\n<div class=\"promo-banner\" id=\"promo-slot-banner\" data-ad-id=\"56789\" data-campaign=\"winter-deals\">\n <style>\n .promo-banner {\n width: 970px;\n height: 250px;\n border: 2px solid #ccc;\n margin: 20px 0;\n }\n .promo-content {\n padding: 20px;\n text-align: center;\n background-color: #f8f8f8;\n }\n .cta-button {\n display: inline-block;\n margin: 10px 0;\n padding: 10px 20px;\n color: #fff;\n background-color: #007bff;\n border: none;\n text-decoration: none;\n cursor: pointer;\n }\n </style>\n <div class=\"promo-content\">\n <h2>Special Winter Deals!</h2>\n <img src=\"winter-banner.jpg\" alt=\"Winter Sale\" width=\"100%\">\n <a href=\"#\" class=\"cta-button\">Shop Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:inline-block;width:970px;height:250px\"\n data-ad-client=\"ca-pub-987654321\"\n data-ad-slot=\"54321\"></ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner promo-ad-container\" id=\"promo-728x90\" data-ad-id=\"summer-sales\" data-tracking=\"yes\">\n <style>\n .promo-ad-container { width: 728px; height: 90px; border-radius: 5px; margin: 15px 0; position: relative; }\n .promo-content { background-color: #f8f9fa; text-align: center; padding: 15px; }\n .cta-button { background-color: #ff5500; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; display: inline-block; }\n </style>\n <div class=\"promo-content\">\n <img src=\"/images/sale-banner.jpg\" alt=\"50% Off Summer Sale\" />\n <a href=\"/shop-now\" class=\"cta-button\">Shop Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:block\"\n data-ad-client=\"ca-pub-987654321\"\n data-ad-slot=\"7301234567\"\n data-ad-format=\"auto\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": null,
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-container\" id=\"banner-ad-300x250\" data-ad-id=\"6677889\" data-campaign=\"winter-clearance-sale\">\n <style>\n .ad-container { width: 300px; height: 250px; border: 1px solid #ccc; position: relative; overflow: hidden; }\n .ad-content { background-color: #f1f1f1; height: 100%; }\n .ad-title { font-size: 16px; font-weight: bold; margin: 10px; }\n .cta-button { display: block; text-align: center; margin-top: 20px; font-size: 14px; color: white; background-color: #d45500; padding: 10px; text-decoration: none; }\n </style>\n <div class=\"ad-content\">\n <div class=\"ad-title\" data-tracking=\"user-preference\">Special Offer Just For You!</div>\n <img src=\"special-offer.jpg\" alt=\"Winter Sale\"/>\n <a href=\"#\" class=\"cta-button\">Take a Look</a>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({\n google_ad_client: \"ca-pub-999999\",\n enable_page_level_ads: true\n });\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-container banner-ad\" id=\"ad-slot-320x50\" data-ad-id=\"78236\" data-campaign=\"spring-promo\">\n <style>\n .ad-container {\n width: 320px;\n height: 50px;\n border: 2px solid #ccc;\n background-color: #f5f5f5;\n overflow: hidden;\n position: relative;\n }\n .ad-content {\n text-align: center;\n padding: 5px;\n }\n .ad-content img {\n max-width: 100%;\n max-height: 100%;\n }\n .cta-button {\n color: white;\n background-color: #ff4500;\n padding: 5px 10px;\n text-decoration: none;\n font-weight: bold;\n border-radius: 4px;\n }\n </style>\n <div class=\"ad-content\">\n <img src=\"special-offer.png\" alt=\"Special Offer: 25% Off\">\n <a href=\"/offer-page\" class=\"cta-button\">Shop Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:inline-block;width:320px;height:50px\"\n data-ad-client=\"ca-pub-1234567890\"\n data-ad-slot=\"9876543210\">\n </ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner-container\" id=\"promo-banner-top\" data-ad-id=\"987654\" data-campaign=\"personalized-offer\">\n <style>\n .ad-banner-container { width: 728px; height: 90px; border: 1px solid #ccc; background: #f1f1f1; position: relative; }\n .ad-banner-content { padding: 15px; color: #333; font-family: Arial, sans-serif; }\n .ad-banner-button { color: #fff; background-color: #f68b1e; border: none; padding: 10px 20px; position: absolute; bottom: 10px; right: 15px; cursor: pointer; }\n .ad-banner-button:hover { background-color: #e07a1a; }\n </style>\n <div class=\"ad-banner-content\">\n <h3>Exclusive Offer Just for You!</h3>\n <p>Save up to 30% on selected items. Stay updated with personalized deals!</p>\n <button class=\"ad-banner-button\">Explore Offers</button>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({\n google_ad_client: \"ca-pub-123456\",\n enable_page_level_ads: true\n });\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner-container\" id=\"banner-ad-728x90\" data-ad-id=\"adslot123\" data-campaign=\"summer-discount\">\n <style>\n .ad-banner-container { width: 728px; height: 90px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }\n .ad-banner-content { padding: 10px; text-align: center; background-color: #f4f4f4; }\n .banner-text { font-size: 16px; color: #333; }\n </style>\n <div class=\"ad-banner-content\">\n <span class=\"banner-text\">50% Off on All Apparel - Limited Time Only</span>\n <a href=\"https://example-promo.com\" class=\"cta-shop-button\">Shop Now</a>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:inline-block;width:728px;height:90px\"\n data-ad-client=\"ca-pub-456789\"\n data-ad-slot=\"987654\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n </div>\n <img src=\"tracking-pixel.gif\" alt=\"\" class=\"tracking-pixel\" width=\"1\" height=\"1\" />\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" id=\"promo-ad-hero\" data-ad-id=\"752348\" data-campaign=\"black-friday\" data-tracking=\"trg-policy-a\">\n <style>\n .ad-banner { display: block; width: 920px; height: 120px; background-color: #f1f1f1; position: relative; margin: 20px auto; border: 2px solid #ccc; }\n .ad-banner .ad-content { padding: 15px; font-family: Arial, sans-serif; text-align: center; }\n .cta-button { display: inline-block; padding: 10px 15px; color: #fff; background-color: #ff5500; border: none; border-radius: 3px; text-decoration: none; margin-top: 10px; }\n .cta-button:hover { background-color: #e04500; }\n </style>\n\n <div class=\"ad-content\">\n <img src=\"https://example.com/images/blackfriday_sale.jpg\" alt=\"Black Friday Sale\" style=\"max-width: 100%; height: auto;\">\n <a href=\"https://example.com/blackfriday\" class=\"cta-button\" aria-label=\"Shop Black Friday Deals\">Shop Now</a>\n </div>\n\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:inline-block;width:920px;height:120px\"\n data-ad-client=\"ca-settings-pub-135654\" \n data-ad-slot=\"654321\"></ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "e-commerce",
+    "confidence": 0.95
+  }
+]

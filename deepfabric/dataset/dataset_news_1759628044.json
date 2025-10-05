@@ -1,0 +1,65 @@
+[
+  {
+    "html": "<div class=\"sidebar-ad\" id=\"side-bar-ad-300x250\" data-ad-id=\"54321\" data-campaign=\"latest-deals\">\n <style>\n .sidebar-ad { width: 300px; height: 250px; position: fixed; top: 100px; right: 0; border: 1px solid #ccc; }\n .ad-content { text-align: center; font-family: Arial, sans-serif; background: #f5f5f5; padding: 10px; }\n </style>\n <div class=\"ad-content\">\n <img src=\"ad-banner.jpg\" alt=\"Exclusive Deals\" width=\"280\" height=\"150\" />\n <p><a href=\"#\" class=\"ad-link\">Exclusive Deal: Save 50% Now!</a></p>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <script>\n googletag.cmd.push(function() {\n googletag.defineSlot('/6355419/Travel/Europe', [300, 250], 'side-bar-ad-300x250').addService(googletag.pubads());\n googletag.pubads().enableSingleRequest();\n googletag.enableServices();\n });\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "sidebar",
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"sidebar-ad\" id=\"ad-slot-300x250\" data-ad-id=\"67890\" data-tracking=\"news-article-widget\">\n <style>\n .sidebar-ad { width: 300px; height: 250px; border: 1px solid #ccc; margin: 0 auto; }\n .ad-banner { background-color: #f9f9f9; padding: 5px; text-align: center; }\n .cta-button { display: block; margin: 10px 0; color: #0044cc; text-decoration: none; }\n </style>\n <div class=\"ad-banner\">\n <img src=\"ad-image.jpg\" alt=\"Special Offer\" class=\"ad-image\" />\n <a href=\"#\" class=\"cta-button\">Find Out More</a>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <div id=\"gpt-ad-300x250\">\n <script>\n window.googletag = window.googletag || {cmd: []};\n googletag.cmd.push(function() {\n googletag.defineSlot('/1234567/ad-slot', [300, 250], 'gpt-ad-300x250')\n .addService(googletag.pubads());\n googletag.enableServices();\n });\n </script>\n </div>\n</div>",
+    "is_ad": true,
+    "ad_type": "sidebar",
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-container\" id=\"sponsored-content\" data-ad-id=\"658473\" data-campaign=\"autumn-promo\">\n <style>\n .ad-container {\n width: 300px;\n height: 250px;\n margin: 20px auto;\n border: 2px solid #ccc;\n background-color: #fff;\n position: relative;\n box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n }\n .ad-label {\n font-size: 12px;\n color: #999;\n text-align: right;\n padding: 5px 10px;\n }\n .ad-content {\n padding: 15px;\n text-align: center;\n }\n .cta-button {\n display: inline-block;\n margin-top: 10px;\n padding: 10px 20px;\n background: #0073e6;\n color: #fff;\n text-decoration: none;\n border-radius: 5px;\n }\n </style>\n <div class=\"ad-content\">\n <div class=\"ad-label\">Sponsored</div>\n <img src=\"ad-banner.jpg\" alt=\"Latest Autumn Sale\">\n <div>\n <a href=\"#\" class=\"cta-button\">Discover Now</a>\n </div>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <script>\n googletag.cmd.push(function() {\n googletag.defineSlot('/6355419/Travel/Europe', [300, 250], 'sponsored-content')\n .addService(googletag.pubads());\n googletag.enableServices();\n });\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner-container\" id=\"banner-ad-300x250\" data-ad-id=\"67890\" data-tracking=\"banner-top-ad\">\n <style>\n .ad-banner-container {\n width: 300px;\n height: 250px;\n margin: 20px auto;\n border: 1px solid #ccc;\n box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);\n }\n .ad-banner-content {\n text-align: center;\n padding: 15px;\n background-color: #f9f9f9;\n }\n .cta-button {\n display: inline-block;\n margin-top: 10px;\n padding: 5px 10px;\n background-color: #007bff;\n color: #fff;\n text-decoration: none;\n border-radius: 3px;\n }\n </style>\n <div class=\"ad-banner-content\">\n <img src=\"ad-image.jpg\" alt=\"Promotional Offer\">\n <a href=\"#\" class=\"cta-button\">Learn More</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" data-ad-client=\"ca-pub-987654321\"></ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-container\" id=\"banner-ad-300x250\" data-ad-id=\"news-promo-789\" data-campaign=\"tech-updates\">\n <style>\n .ad-container { width: 300px; height: 250px; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; border: 1px solid #ccc; }\n .ad-banner { padding: 15px; text-align: center; }\n .cta-button { display: inline-block; padding: 8px 16px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px; }\n </style>\n <div class=\"ad-banner\">\n <img src=\"promo.jpg\" alt=\"Exciting Tech Offer\">\n <a href=\"https://ads.example.com\" class=\"cta-button\">Learn More</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" style=\"display:inline-block;width:300px;height:250px\" data-ad-client=\"ca-pub-987654321\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": null,
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"news-ad ad-banner\" id=\"banner-ad-320x50\" data-ad-id=\"ad-678\" data-campaign=\"latest-trends\">\n <style>\n .news-ad { max-width: 320px; margin: auto; }\n .ad-banner { width: 320px; height: 50px; border: 1px solid #e0e0e0; position: relative; }\n .ad-content { padding: 5px; background: #f7f7f7; }\n </style>\n <div class=\"ad-content\">\n <img src=\"ad-banner.jpg\" alt=\"Latest Trends Sale\">\n <a href=\"#\" class=\"cta-link\">Discover More</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" style=\"display:inline-block;width:320px;height:50px;\" data-ad-client=\"ca-pub-987654321\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n <meta charset=\"UTF-8\">\n <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n <title>News Website - Sample Article</title>\n <style>\n .article-container { width: 60%; margin: auto; border: 1px solid #ccc; padding: 20px; }\n .ad-inline { width: 300px; height: 250px; margin: 10px auto; text-align: center; }\n .ad-content { background-color: #f3f3f3; padding: 15px; border: 1px solid #ddd; }\n .ad-label { font-size: 12px; color: #999; }\n </style>\n</head>\n<body>\n\n<div class=\"article-container\">\n <h1>Amazing Advances in AI Technology</h1>\n <p>\n <div class=\"ad-inline\" id=\"ad-slot-inline\" data-ad-id=\"67890\" data-campaign=\"ai-tech\">\n <div class=\"ad-content\">\n <span class=\"ad-label\">Advertisement</span>\n <img src=\"https://via.placeholder.com/300x250\" alt=\"Banner Ad\">\n <p>Explore the latest AI solutions today!</p>\n </div>\n </div>\n Recent developments in artificial intelligence have shown...\n </p>\n</div>\n\n<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n<ins class=\"adsbygoogle\"\n style=\"display:inline-block;width:300px;height:250px\"\n data-ad-client=\"ca-pub-123456\":/>\n</body>\n</html>",
+    "is_ad": true,
+    "ad_type": "inline",
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" id=\"promo-slot-300x250\" data-ad-id=\"67890\" data-campaign=\"fall-discounts\">\n <style>\n .ad-banner { width: 300px; height: 250px; border: 1px solid #ccc; display: block; }\n .ad-banner img { width: 100%; height: auto; }\n .cta-button { display: inline-block; margin-top: 10px; text-align: center; }\n </style>\n <div class=\"ad-content\">\n <img src=\"ad-image.jpg\" alt=\"Fall Discounts\">\n <a href=\"#\" class=\"cta-button\">Learn More</a>\n </div>\n <script async src=\"https://securepubads.g.doubleclick.net/tag/js/gpt.js\"></script>\n <script>\n window.googletag = window.googletag || {cmd: []};\n googletag.cmd.push(function() {\n googletag.defineSlot('/1234567/news-ad', [300, 250], 'promo-slot-300x250').addService(googletag.pubads());\n googletag.enableServices();\n });\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "news",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"sidebar-ad\" id=\"sponsored-content\" data-ad-network=\"doubleclick\" data-tracking-id=\"news-001\">\n <style>\n .sidebar-ad {\n width: 300px;\n height: 250px;\n border: 1px solid #ccc;\n background-color: #f7f7f7;\n padding: 15px;\n margin: 10px 0;\n }\n .ad-header {\n font-size: 14px;\n color: #444;\n font-weight: bold;\n margin-bottom: 10px;\n }\n .ad-content img {\n width: 100%;\n height: auto;\n }\n .call-to-action {\n display: block;\n text-align: center;\n margin-top: 10px;\n padding: 10px;\n background-color: #0f78d4;\n color: #fff;\n text-decoration: none;\n }\n </style>\n <div class=\"ad-header\">Sponsored Content</div>\n <div class=\"ad-content\">\n <img src=\"ad-image.jpg\" alt=\"Advertisement\">\n <p>Don't miss out on the latest news insights. Subscribe now!</p>\n <a href=\"#\" class=\"call-to-action\">Learn More</a>\n </div>\n <script type=\"text/javascript\">\n (function() {\n var script = document.createElement('script');\n script.src = \"https://www.googletagservices.com/tag/js/gpt.js\";\n script.async = true;\n document.head.appendChild(script);\n // Additional ad network integration logic here...\n })();\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": null,
+    "domain": "news",
+    "confidence": 0.95
+  }
+]
