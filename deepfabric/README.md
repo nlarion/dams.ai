@@ -74,7 +74,7 @@ The system generates balanced datasets containing both advertisement and non-adv
 
 ### Supported Domains
 
-The system supports 11 different domain types, each with domain-specific ad patterns:
+The system supports 30 different domain types, each with domain-specific ad patterns:
 
 - **general** - Generic web ads and content
 - **e-commerce** - Product cards, discount banners, shopping cart promos, "Buy Now" CTAs
@@ -87,6 +87,25 @@ The system supports 11 different domain types, each with domain-specific ad patt
 - **education** - Course promotions, webinar ads, certification programs, "Enroll Now" CTAs
 - **entertainment** - Streaming service ads, movie promotions, event tickets, concert announcements
 - **sports** - Merchandise, ticket sales, betting promotions, fantasy sports
+- **automotive** - Car ads, dealership promotions, auto parts, test drive CTAs, financing offers
+- **real-estate** - Property listings, mortgage ads, rental promotions, "Schedule Tour" CTAs
+- **food-delivery** - Restaurant promos, meal kit ads, delivery service offers, "Order Now" CTAs
+- **fashion** - Clothing sales, seasonal collections, "Shop the Look" CTAs, brand partnerships
+- **beauty-cosmetics** - Makeup tutorials, skincare routines, product launches, "Try Now" CTAs
+- **home-furnishing** - Furniture sales, room inspiration, "Design Your Space" CTAs
+- **electronics** - Gadget launches, tech deals, "Pre-Order" CTAs, product comparisons
+- **job-search** - Featured job listings, recruiter ads, resume services, "Apply Now" CTAs
+- **dating** - Profile promotions, premium features, "Upgrade Now" CTAs, success stories
+- **fitness-wellness** - Gym memberships, supplement ads, workout programs, "Start Free Trial" CTAs
+- **pet-supplies** - Pet food ads, accessory promotions, vet services, "Subscribe & Save" CTAs
+- **insurance** - Quote tools, coverage comparisons, "Get Quote" CTAs, policy explanations
+- **streaming** - Free trial offers, content previews, "Watch Now" CTAs, subscription tiers
+- **software-apps** - SaaS promotions, free trial CTAs, feature comparisons, pricing plans
+- **telecommunications** - Phone plan ads, internet packages, "Switch & Save" CTAs
+- **pharma-medication** - Drug ads, OTC promotions, prescription savings, "Ask Your Doctor" CTAs
+- **toys-hobbies** - Toy launches, collectibles, "Pre-Order" CTAs, age recommendations
+- **legal-services** - Law firm ads, consultation offers, "Free Case Review" CTAs
+- **event-ticketing** - Concert promotions, sports tickets, "Buy Tickets" CTAs, presale codes
 
 ### Ad Examples Include
 
@@ -141,15 +160,17 @@ Generate ads for a specific domain with custom parameters:
 # Generate 9 e-commerce ads (default)
 python generate_ad_dataset.py --domain e-commerce
 
-# Generate 100 gaming ads with high variety
-python generate_ad_dataset.py --domain gaming --samples 100 --temperature 1.0
+# Generate 100 balanced samples (50% ads, 50% non-ads)
+python generate_ad_dataset.py --domain gaming --samples 100 --temperature 1.0 \
+  --tree-depth 3 --tree-degree 5
 
-# Generate 1000 news ads with maximum variety
+# Generate 1000 samples with 70% ads, 30% non-ads
 python generate_ad_dataset.py --domain news --samples 1000 --temperature 1.2 \
-  --tree-depth 4 --tree-degree 5
+  --tree-depth 4 --tree-degree 6 --ad-ratio 0.7
 
-# Generate 500 finance ads with moderate variety
-python generate_ad_dataset.py --domain finance --samples 500 --tree-depth 3 --tree-degree 6
+# Generate 500 samples with 30% ads, 70% non-ads (more non-ads for balance)
+python generate_ad_dataset.py --domain finance --samples 500 --tree-depth 3 \
+  --tree-degree 6 --ad-ratio 0.3
 ```
 
 ### Command-Line Options
@@ -161,7 +182,12 @@ Options:
   --domain DOMAIN       Domain type for ad generation (default: general)
                         Choices: general, e-commerce, news, social-media, gaming,
                                  finance, travel, healthcare, education,
-                                 entertainment, sports
+                                 entertainment, sports, automotive, real-estate,
+                                 food-delivery, fashion, beauty-cosmetics,
+                                 home-furnishing, electronics, job-search, dating,
+                                 fitness-wellness, pet-supplies, insurance, streaming,
+                                 software-apps, telecommunications, pharma-medication,
+                                 toys-hobbies, legal-services, event-ticketing
 
   --samples N          Target number of samples to generate (default: 9)
 
@@ -173,6 +199,10 @@ Options:
 
   --tree-degree N      Topic tree branching factor (default: 3)
                        Increase for more topic paths
+
+  --ad-ratio R         Ratio of ads to non-ads (0.0-1.0, default: 0.5)
+                       0.5 = 50% ads, 50% non-ads (balanced)
+                       0.7 = 70% ads, 30% non-ads
 
   --config PATH        Path to YAML configuration file
                        (default: python-tutorial.yaml)

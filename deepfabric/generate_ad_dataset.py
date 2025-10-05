@@ -25,7 +25,7 @@ from ad_detection_formatter import AdDetectionFormatter
 
 def create_temp_config(original_config: str, raw_output: str, domain: str = "general",
                        samples: int = 9, temperature: float = 0.8,
-                       tree_depth: int = 2, tree_degree: int = 3) -> str:
+                       tree_depth: int = 2, tree_degree: int = 3, ad_ratio: float = 0.5) -> str:
     """
     Create a temporary config file with the timestamped output filename and domain settings.
 
@@ -37,6 +37,7 @@ def create_temp_config(original_config: str, raw_output: str, domain: str = "gen
         temperature: Temperature for generation variety
         tree_depth: Topic tree depth
         tree_degree: Topic tree branching factor
+        ad_ratio: Ratio of ads to non-ads (0.0-1.0)
 
     Returns:
         Path to the temporary configuration file
@@ -75,10 +76,15 @@ def create_temp_config(original_config: str, raw_output: str, domain: str = "gen
 
     actual_samples = num_steps * batch_size
 
+    # Calculate expected ad vs non-ad distribution
+    ad_percentage = int(ad_ratio * 100)
+    non_ad_percentage = 100 - ad_percentage
+
     print(f"\nGeneration parameters:")
     print(f"  Topic tree: depth={tree_depth}, degree={tree_degree} (~{max_paths} paths)")
     print(f"  Samples: {num_steps} steps × {batch_size} batch = {actual_samples} samples")
     print(f"  Temperature: {temperature} (variety)")
+    print(f"  Ad ratio: {ad_percentage}% ads, {non_ad_percentage}% non-ads")
 
     # Warn if tree is too small for requested samples
     if actual_samples < samples:
@@ -99,6 +105,16 @@ def create_temp_config(original_config: str, raw_output: str, domain: str = "gen
     config['dataset']['creation']['num_steps'] = num_steps
     config['dataset']['creation']['batch_size'] = batch_size
 
+    # Inject ad ratio into instructions
+    ad_percentage = int(ad_ratio * 100)
+    non_ad_percentage = 100 - ad_percentage
+
+    # Add balance instruction to the data engine instructions
+    balance_instruction = f"\n\n⚖️ BALANCE REQUIREMENT: Generate approximately {ad_percentage}% advertisement examples and {non_ad_percentage}% non-advertisement examples. Vary between ads and non-ads to maintain this ratio throughout generation.\n"
+
+    if 'data_engine' in config and 'instructions' in config['data_engine']:
+        config['data_engine']['instructions'] = balance_instruction + config['data_engine']['instructions']
+
     # Update the output filename
     if 'dataset' in config and 'save_as' in config['dataset']:
         config['dataset']['save_as'] = raw_output
@@ -118,7 +134,7 @@ def create_temp_config(original_config: str, raw_output: str, domain: str = "gen
 
 def run_deepfabric(config_file: str, raw_output: str, domain: str = "general",
                    samples: int = 9, temperature: float = 0.8,
-                   tree_depth: int = 2, tree_degree: int = 3):
+                   tree_depth: int = 2, tree_degree: int = 3, ad_ratio: float = 0.5):
     """
     Run deepfabric with the given configuration file.
 
@@ -130,10 +146,11 @@ def run_deepfabric(config_file: str, raw_output: str, domain: str = "general",
         temperature: Temperature for generation variety
         tree_depth: Topic tree depth
         tree_degree: Topic tree branching factor
+        ad_ratio: Ratio of ads to non-ads
     """
     # Create temporary config with updated output filename and domain
     temp_config = create_temp_config(config_file, raw_output, domain, samples,
-                                     temperature, tree_depth, tree_degree)
+                                     temperature, tree_depth, tree_degree, ad_ratio)
 
     print(f"Running deepfabric with config: {temp_config}")
     print(f"Output will be saved to: {raw_output}")
@@ -296,19 +313,26 @@ Examples:
   # Generate 9 HTML ads for e-commerce domain (default)
   python generate_ad_dataset.py --domain e-commerce
 
-  # Generate 100 samples with high variety for gaming domain
+  # Generate 100 balanced samples (50% ads, 50% non-ads)
   python generate_ad_dataset.py --domain gaming --samples 100 --temperature 1.0
 
-  # Generate 1000 samples with maximum variety (requires larger tree)
+  # Generate 1000 samples with maximum variety and 70% ads
   python generate_ad_dataset.py --domain news --samples 1000 --temperature 1.2 \\
-    --tree-depth 4 --tree-degree 5
+    --tree-depth 4 --tree-degree 5 --ad-ratio 0.7
 
-  # Quick generation with default settings
-  python generate_ad_dataset.py
+  # Generate balanced dataset with default settings (50/50)
+  python generate_ad_dataset.py --domain e-commerce --samples 200
+
+  # Generate dataset with 30% ads, 70% non-ads
+  python generate_ad_dataset.py --domain finance --samples 500 --ad-ratio 0.3
 
 Supported domains:
   general, e-commerce, news, social-media, gaming, finance, travel,
-  healthcare, education, entertainment, sports
+  healthcare, education, entertainment, sports, automotive, real-estate,
+  food-delivery, fashion, beauty-cosmetics, home-furnishing, electronics,
+  job-search, dating, fitness-wellness, pet-supplies, insurance, streaming,
+  software-apps, telecommunications, pharma-medication, toys-hobbies,
+  legal-services, event-ticketing
 
 Tips for variety:
   - Increase --temperature (0.8-1.5) for more diverse outputs
@@ -321,7 +345,11 @@ Tips for variety:
         type=str,
         default='general',
         choices=['general', 'e-commerce', 'news', 'social-media', 'gaming',
-                 'finance', 'travel', 'healthcare', 'education', 'entertainment', 'sports'],
+                 'finance', 'travel', 'healthcare', 'education', 'entertainment', 'sports',
+                 'automotive', 'real-estate', 'food-delivery', 'fashion', 'beauty-cosmetics',
+                 'home-furnishing', 'electronics', 'job-search', 'dating', 'fitness-wellness',
+                 'pet-supplies', 'insurance', 'streaming', 'software-apps', 'telecommunications',
+                 'pharma-medication', 'toys-hobbies', 'legal-services', 'event-ticketing'],
         help='Domain type for ad generation (default: general)'
     )
     parser.add_argument(
@@ -354,6 +382,12 @@ Tips for variety:
         default=3,
         help='Topic tree degree/branching (default: 3, increase for more variety)'
     )
+    parser.add_argument(
+        '--ad-ratio',
+        type=float,
+        default=0.5,
+        help='Ratio of ads to non-ads (0.0-1.0, default: 0.5 for balanced). 0.5 = 50%% ads, 50%% non-ads'
+    )
 
     args = parser.parse_args()
 
@@ -363,12 +397,14 @@ Tips for variety:
     temperature = args.temperature
     tree_depth = args.tree_depth
     tree_degree = args.tree_degree
+    ad_ratio = args.ad_ratio
 
     print("=" * 70)
     print(f"HTML Ad Detection Dataset Generator")
     print(f"Domain: {domain}")
     print(f"Target samples: {samples}")
     print(f"Temperature: {temperature}")
+    print(f"Ad ratio: {int(ad_ratio*100)}% ads, {int((1-ad_ratio)*100)}% non-ads")
     print("=" * 70)
 
     # Show existing datasets
@@ -392,7 +428,7 @@ Tips for variety:
     print("Step 1: Generating raw data with deepfabric")
     print(f"Timestamp: {timestamp}")
     print("=" * 70)
-    run_deepfabric(config_file, raw_output, domain, samples, temperature, tree_depth, tree_degree)
+    run_deepfabric(config_file, raw_output, domain, samples, temperature, tree_depth, tree_degree, ad_ratio)
 
     # Step 2: Format the data
     print("\n" + "=" * 70)

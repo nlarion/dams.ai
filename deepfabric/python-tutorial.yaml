@@ -1,7 +1,7 @@
 dataset_system_prompt: "You are an expert in web development and online advertising. Generate realistic HTML, CSS, and JavaScript code snippets for training an ML ad detection classifier that analyzes HTML structure, CSS classes, and JavaScript ad network patterns."
 
 # Domain configuration
-# Supported domains: general, e-commerce, news, social-media, gaming, finance, travel, healthcare, education, entertainment, sports
+# Supported domains: general, e-commerce, news, social-media, gaming, finance, travel, healthcare, education, entertainment, sports, automotive, real-estate, food-delivery, fashion, beauty-cosmetics, home-furnishing, electronics, job-search, dating, fitness-wellness, pet-supplies, insurance, streaming, software-apps, telecommunications, pharma-medication, toys-hobbies, legal-services, event-ticketing
 domain: "general"
 
 topic_tree:
@@ -44,6 +44,25 @@ data_engine:
     EDUCATION: Course promotions, webinar ads, educational tools, certification programs, "Enroll Now" CTAs, learning platform ads
     ENTERTAINMENT: Streaming service ads, movie promotions, event tickets, concert announcements, "Watch Now" CTAs, subscription offers
     SPORTS: Merchandise, ticket sales, betting promotions, fantasy sports, team gear, "Get Tickets" CTAs, sports streaming services
+    AUTOMOTIVE: Car ads, dealership promotions, auto parts, test drive CTAs, financing offers, trade-in promotions, "Schedule Service" CTAs, vehicle comparisons
+    REAL-ESTATE: Property listings, mortgage ads, rental promotions, "Schedule Tour" CTAs, real estate agent ads, home valuation tools, refinancing offers
+    FOOD-DELIVERY: Restaurant promos, meal kit ads, delivery service offers, "Order Now" CTAs, discount codes, subscription plans, first-order deals
+    FASHION: Clothing sales, seasonal collections, "Shop the Look" CTAs, brand partnerships, influencer collaborations, style guides, size charts
+    BEAUTY-COSMETICS: Makeup tutorials, skincare routines, product launches, "Try Now" CTAs, before/after photos, subscription boxes, beauty tips
+    HOME-FURNISHING: Furniture sales, room inspiration, "Design Your Space" CTAs, seasonal collections, free shipping offers, virtual room planners
+    ELECTRONICS: Gadget launches, tech deals, "Pre-Order" CTAs, product comparisons, trade-in programs, warranty offers, bundle deals
+    JOB-SEARCH: Featured job listings, recruiter ads, resume services, "Apply Now" CTAs, career coaching, skill assessments, salary tools
+    DATING: Profile promotions, premium features, "Upgrade Now" CTAs, success stories, match algorithms, subscription tiers, safety features
+    FITNESS-WELLNESS: Gym memberships, supplement ads, workout programs, "Start Free Trial" CTAs, transformation photos, nutrition plans, fitness challenges
+    PET-SUPPLIES: Pet food ads, accessory promotions, vet services, "Subscribe & Save" CTAs, product reviews, pet care tips, loyalty programs
+    INSURANCE: Quote tools, coverage comparisons, "Get Quote" CTAs, policy explanations, savings calculators, customer testimonials, claim services
+    STREAMING: Free trial offers, content previews, "Watch Now" CTAs, subscription tiers, exclusive content, device compatibility, download options
+    SOFTWARE-APPS: SaaS promotions, free trial CTAs, feature comparisons, pricing plans, "Sign Up" CTAs, integration showcases, demo videos
+    TELECOMMUNICATIONS: Phone plan ads, internet packages, "Switch & Save" CTAs, coverage maps, device deals, bundle offers, network comparisons
+    PHARMA-MEDICATION: Drug ads, OTC promotions, prescription savings, "Ask Your Doctor" CTAs, side effects, patient testimonials, pharmacy services
+    TOYS-HOBBIES: Toy launches, collectibles, "Pre-Order" CTAs, age recommendations, hobby supplies, limited editions, gift guides
+    LEGAL-SERVICES: Law firm ads, consultation offers, "Free Case Review" CTAs, practice areas, attorney profiles, legal tech tools, document services
+    EVENT-TICKETING: Concert promotions, sports tickets, "Buy Tickets" CTAs, presale codes, seat maps, venue info, VIP packages
 
     For advertisement examples (HTML/CSS/JavaScript), create content that includes:
     - Common ad container classes (ad, advertisement, sponsored, promo, ad-banner, sidebar-ad, etc.)
