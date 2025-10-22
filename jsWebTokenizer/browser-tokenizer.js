@@ -34,7 +34,7 @@ class NLPTokenizer {
             
             if (Array.isArray(jsonData)) {
               //corpus = jsonData.filter(item => typeof item === 'string');
-              corpus = jsonData.flatMap(x=>x.corpus);
+              corpus = jsonData.flatMap(x=>x.text);
             } else if (typeof jsonData === 'object') {
               // Try to find text fields to extract
               const possibleFields = ['text', 'content', 'corpus', 'documents', 'sentences', 'labels'];

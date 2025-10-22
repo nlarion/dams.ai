@@ -2,15 +2,15 @@ dataset_system_prompt: You are an expert in web development and online advertisi
   Generate realistic HTML, CSS, and JavaScript code snippets for training an ML ad
   detection classifier that analyzes HTML structure, CSS classes, and JavaScript ad
   network patterns.
-domain: insurance
+domain: food-delivery
 topic_tree:
-  topic_prompt: HTML/CSS/JavaScript elements and structures for insurance web ad detection
-    training. Focus on insurance-specific DOM patterns, CSS classes, and ad network
-    code.
-  topic_system_prompt: You are an expert in web development and insurance websites.
+  topic_prompt: HTML/CSS/JavaScript elements and structures for food-delivery web
+    ad detection training. Focus on food-delivery-specific DOM patterns, CSS classes,
+    and ad network code.
+  topic_system_prompt: You are an expert in web development and food-delivery websites.
     Generate diverse topics covering both advertisement HTML/CSS/JavaScript patterns
     (ad containers, tracking scripts, ad network code) and regular web content structures
-    specific to insurance websites.
+    specific to food-delivery websites.
   degree: 6
   depth: 4
   temperature: 0.8
@@ -23,17 +23,17 @@ data_engine:
     \ and non-ads to maintain this ratio throughout generation.\n\U0001F3AF PRIMARY\
     \ GOAL: Generate realistic HTML, CSS, and JavaScript code for training ML models\
     \ to detect ads by analyzing HTML structure.\n\nGenerate a realistic HTML example\
-    \ based on the given topic for insurance websites.\n\nIMPORTANT: Your response\
+    \ based on the given topic for food-delivery websites.\n\nIMPORTANT: Your response\
     \ MUST follow this format:\n\nGenerate realistic HTML/CSS/JavaScript snippets\
     \ that an ML model will analyze to detect ads.\n\n1. Provide ONE complete HTML\
     \ snippet with inline CSS styles or <style> tags and/or <script> tags if relevant\n\
     2. Include realistic CSS class names, IDs, and attributes that are commonly used\
-    \ in insurance websites\n3. For ads: Include common ad network code (Google AdSense,\
-    \ DoubleClick), tracking pixels, data attributes\n4. For non-ads: Include typical\
-    \ website elements without promotional markup\n5. Enclose in ```html``` code blocks\n\
-    6. After the HTML, clearly state: Classification: is_ad: [true or false]\n7. If\
-    \ it's an ad (is_ad: true), also specify: Ad Type: [banner/sidebar/inline/sponsored/native]\n\
-    \nDOMAIN-SPECIFIC PATTERNS FOR insurance:\n\nE-COMMERCE: Product cards, discount\
+    \ in food-delivery websites\n3. For ads: Include common ad network code (Google\
+    \ AdSense, DoubleClick), tracking pixels, data attributes\n4. For non-ads: Include\
+    \ typical website elements without promotional markup\n5. Enclose in ```html```\
+    \ code blocks\n6. After the HTML, clearly state: Classification: is_ad: [true\
+    \ or false]\n7. If it's an ad (is_ad: true), also specify: Ad Type: [banner/sidebar/inline/sponsored/native]\n\
+    \nDOMAIN-SPECIFIC PATTERNS FOR food-delivery:\n\nE-COMMERCE: Product cards, discount\
     \ banners, shopping cart promos, \"Buy Now\" CTAs, price highlights, limited-time\
     \ offers, product recommendations\nNEWS: Native ads disguised as articles, sponsored\
     \ content, sidebar story recommendations, \"Recommended for you\", newsletter\
@@ -89,11 +89,11 @@ data_engine:
     \ sponsored, promo, ad-banner, sidebar-ad, etc.)\n- Inline CSS styles or <style>\
     \ blocks with ad-specific styling\n- Ad network placeholders (google-adsense,\
     \ doubleclick, adsbygoogle, etc.)\n- JavaScript ad loading code (<script> tags\
-    \ for ad networks)\n- Promotional content with CTAs relevant to insurance\n- Tracking\
-    \ attributes (data-ad-id, data-campaign, data-tracking, etc.)\n- Common ad dimensions\
-    \ (300x250, 728x90, 160x600, 320x50)\n- Ad-specific div IDs (#ad-slot, #banner-ad,\
-    \ #sponsored-content)\n- iframes for third-party ad content\n- Tracking pixels\
-    \ and analytics code\n\nFor non-advertisement examples (HTML/CSS/JavaScript),\
+    \ for ad networks)\n- Promotional content with CTAs relevant to food-delivery\n\
+    - Tracking attributes (data-ad-id, data-campaign, data-tracking, etc.)\n- Common\
+    \ ad dimensions (300x250, 728x90, 160x600, 320x50)\n- Ad-specific div IDs (#ad-slot,\
+    \ #banner-ad, #sponsored-content)\n- iframes for third-party ad content\n- Tracking\
+    \ pixels and analytics code\n\nFor non-advertisement examples (HTML/CSS/JavaScript),\
     \ create content for:\n- Navigation menus (nav, menu, header classes) with standard\
     \ styling\n- Article content (article, post, content, main classes)\n- User comments\
     \ (comment, review, feedback classes)\n- Form elements (form, input, button, select)\
@@ -112,7 +112,7 @@ data_engine:
     >\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/about\">About</a></li>\n\
     \    <li><a href=\"/contact\">Contact</a></li>\n  </ul>\n</nav>\n```\nClassification:\
     \ is_ad: false\n"
-  generation_system_prompt: You are an expert in insurance websites and ad content.
+  generation_system_prompt: You are an expert in food-delivery websites and ad content.
     Generate realistic HTML/CSS/JavaScript code with proper DOM structure, CSS classes,
     and ad network patterns that ML models can analyze. Classify all examples correctly
     for ad detection training.
@@ -122,12 +122,12 @@ data_engine:
   max_retries: 3
 dataset:
   creation:
-    num_steps: 50
+    num_steps: 100
     batch_size: 10
     provider: openai
     model: gpt-4o
     sys_msg: true
-  save_as: debug/dataset_insurance_1759698965_raw.jsonl
+  save_as: debug/dataset_food-delivery_1759720054_raw.jsonl
   format: jsonl
 formatter:
   type: custom

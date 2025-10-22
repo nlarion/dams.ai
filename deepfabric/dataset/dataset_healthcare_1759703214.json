@@ -1,0 +1,44 @@
+[
+  {
+    "html": "<div class=\"promo-banner\" id=\"ad-slot-300x250\" data-ad-id=\"health2023\" data-campaign=\"telehealth-promo\">\n <style>\n .promo-banner { width: 300px; height: 250px; border: 1px solid #ccc; background-color: #f8f8f8; }\n .promo-content { padding: 15px; text-align: center; }\n .cta-button { color: #0073e6; font-weight: bold; text-decoration: underline; }\n </style>\n <div class=\"promo-content\">\n <p>Connect with top doctors via video call!</p>\n <a href=\"/telemedicine\" class=\"cta-button\">Start Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" data-ad-client=\"ca-pub-987654321\"></ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "healthcare",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-container telemedicine-ad\" id=\"ad-promo-320x50\" data-ad-id=\"health-telemed-001\" data-campaign=\"telemed-spring-offer\">\n <style>\n .ad-container { width: 320px; height: 50px; border: 1px solid #e0e0e0; }\n .telemedicine-ad { background-color: #f9f9f9; text-align: center; }\n .cta { color: #007bff; font-weight: bold; text-decoration: none; }\n </style>\n <div class=\"ad-content\">\n <img src=\"telemedicine-ad.jpg\" alt=\"Try Telemedicine Today\" style=\"max-width:100%;\">\n <a href=\"#\" class=\"cta\">Consult Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:inline-block;width:320px;height:50px\"\n data-ad-client=\"ca-pub-123456789\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "healthcare",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-container\" id=\"pharma-ad-banner\" data-ad-id=\"Rx123\" data-campaign=\"autumn-health\">\n <style>\n .ad-container { width: 300px; height: 250px; border: 2px solid #ccc; }\n .ad-content { padding: 15px; background-color: #f5f5f5; }\n .cta-button { color: white; background: #007BFF; text-decoration: none; padding: 10px; border-radius: 5px; }\n </style>\n <div class=\"ad-content\">\n <img src=\"prescription-promo.jpg\" alt=\"Ask Your Doctor\" style=\"width:100%\">\n <a href=\"/learn-more\" class=\"cta-button\">Learn More</a>\n </div>\n <script async src=\"https://adnetwork.example.com/ad.js\"></script>\n <script>\n (adsbyexample = window.adsbyexample || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "healthcare",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-container\" id=\"sidebar-health-ad\" data-ad-id=\"heal-prom-001\" data-campaign=\"wellness-boost\">\n <style>\n .ad-container { width: 160px; height: 600px; margin: 10px; border: 1px solid #ccc; background: #f9f9f9; }\n .ad-content { padding: 15px; text-align: center; }\n .cta-button { display: inline-block; background-color: #FF5733; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }\n </style>\n <div class=\"ad-content\">\n <h3>Boost Your Wellness!</h3>\n <img src=\"wellness-product.jpg\" alt=\"Wellness Product\" width=\"140\" height=\"200\">\n <p>Exclusive offer on our premium wellness products.</p>\n <a href=\"#\" class=\"cta-button\">Buy Now</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" data-ad-client=\"ca-pub-987654321\"></ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "sidebar",
+    "domain": "healthcare",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" id=\"ad-slot-health-300x250\" data-ad-id=\"healthcare-ad-001\" data-campaign=\"wellness-promo\">\n <style>\n .ad-banner { \n width: 300px; \n height: 250px; \n border: 1px solid #c0c0c0; \n box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);\n }\n .ad-content {\n display: flex;\n justify-content: center;\n align-items: center;\n background-color: #fff;\n }\n .cta-button {\n color: #1a73e8;\n text-decoration: none;\n font-weight: bold;\n }\n </style>\n <div class=\"ad-content\">\n <img src=\"health-banner.jpg\" alt=\"Wellness Savings\">\n <a href=\"#\" class=\"cta-button\">Learn More</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\" data-ad-client=\"ca-pub-1234567890\"></ins>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "healthcare",
+    "confidence": 0.95
+  },
+  {
+    "html": "<div class=\"ad-banner\" id=\"healthcare-ad-slot\" data-ad-id=\"56789\" data-campaign=\"health-boost-campaign\">\n <style>\n .ad-banner {\n width: 320px;\n height: 50px;\n border: 1px solid #ccc;\n margin: 10px 0;\n background-color: #f9f9f9;\n text-align: center;\n position: relative;\n }\n .ad-banner img {\n max-width: 100%;\n height: auto;\n }\n .cta-button {\n display: inline-block;\n margin-top: 5px;\n padding: 8px 15px;\n background-color: #2b7a78;\n color: #fff;\n text-decoration: none;\n font-weight: bold;\n border-radius: 4px;\n }\n </style>\n <div class=\"ad-content\">\n <img src=\"health-product.jpg\" alt=\"Promote Your Health\">\n <a href=\"#\" class=\"cta-button\">Discover More</a>\n </div>\n <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n <ins class=\"adsbygoogle\"\n style=\"display:block\"\n data-ad-client=\"ca-pub-9876543210\"\n data-ad-slot=\"1234567890\"\n data-ad-format=\"auto\"\n data-full-width-responsive=\"true\"></ins>\n <script>\n (adsbygoogle = window.adsbygoogle || []).push({});\n </script>\n</div>",
+    "is_ad": true,
+    "ad_type": "banner",
+    "domain": "healthcare",
+    "confidence": 0.95
+  }
+]

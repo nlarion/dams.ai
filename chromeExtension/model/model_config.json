@@ -1,0 +1,12 @@
+{
+  "max_length": 50,
+  "vocab_size": 107,
+  "embedding_dim": 16,
+  "model_type": "binary_classification",
+  "labels": [
+    "not_ads",
+    "ads"
+  ],
+  "pad_token": "<PAD>",
+  "oov_token": "<OOV>"
+}

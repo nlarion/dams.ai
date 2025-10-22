@@ -16,6 +16,7 @@ import yaml
 import argparse
 import re
 from pathlib import Path
+import threading
 
 # Add current directory to path to import custom formatter
 sys.path.insert(0, str(Path(__file__).parent))
@@ -152,24 +153,93 @@ def run_deepfabric(config_file: str, raw_output: str, domain: str = "general",
     temp_config = create_temp_config(config_file, raw_output, domain, samples,
                                      temperature, tree_depth, tree_degree, ad_ratio)
 
+    # Calculate expected samples and steps
+    max_paths = tree_degree ** tree_depth
+    batch_size = min(10, max(3, samples // 10))
+    num_steps = min(samples // batch_size, max_paths)
+    if num_steps * batch_size > max_paths:
+        batch_size = max(1, max_paths // max(1, num_steps))
+        num_steps = max_paths // batch_size
+    if num_steps < 1:
+        num_steps = 1
+        batch_size = min(samples, max_paths)
+    expected_samples = num_steps * batch_size
+
     print(f"Running deepfabric with config: {temp_config}")
     print(f"Output will be saved to: {raw_output}")
+    print(f"\n📊 Progress Tracking:")
+    print(f"   Expected samples: {expected_samples}")
+    print(f"   Total steps: {num_steps} (batch size: {batch_size})")
+    print(f"   Estimated API calls: {num_steps + 1} (1 for topics + {num_steps} for data)")
+    print()
+
+    # File monitoring state
+    monitor_running = {'value': True}
+    last_count = {'value': 0}
+
+    def monitor_output_file():
+        """Monitor the output file and track progress in real-time."""
+        output_path = Path(raw_output)
+        while monitor_running['value']:
+            if output_path.exists():
+                try:
+                    with open(output_path, 'r') as f:
+                        line_count = sum(1 for line in f if line.strip())
+                    if line_count > last_count['value']:
+                        last_count['value'] = line_count
+                        progress = (line_count / expected_samples) * 100
+                        print(f"\r📈 Progress: {progress:.1f}% ({line_count}/{expected_samples} samples generated)", end='', flush=True)
+                except:
+                    pass
+            time.sleep(2)  # Check every 2 seconds
+
+    # Start file monitoring thread
+    monitor_thread = threading.Thread(target=monitor_output_file, daemon=True)
+    monitor_thread.start()
 
     try:
-        # Run deepfabric generate command
-        result = subprocess.run(
+        # Run deepfabric generate command with real-time output
+        process = subprocess.Popen(
             ["deepfabric", "generate", temp_config],
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             text=True,
-            check=True
+            bufsize=1
         )
-        print("Deepfabric generation complete!")
-        print(result.stdout)
+
+        api_calls = 0
+        import re
+
+        # Stream output and track progress
+        for line in iter(process.stdout.readline, ''):
+            if line:
+                # Print the line but move cursor to new line if we had progress output
+                if last_count['value'] > 0:
+                    print()  # New line after progress indicator
+                print(line, end='')
+
+                # Track API calls based on deepfabric's actual output
+                if 'DeepFabric Tree Generation' in line or 'Building hierarchical topic' in line:
+                    api_calls += 1
+                    print(f"   🔄 [API Call #{api_calls}] Generating topic tree...")
+                elif 'Dataset Creation' in line or 'Generating dataset' in line:
+                    print(f"   🔄 Starting data generation...")
+
+        process.wait()
+        monitor_running['value'] = False  # Stop monitoring
+
+        if process.returncode != 0:
+            raise subprocess.CalledProcessError(process.returncode, process.args)
+
+        # Final update
+        if last_count['value'] > 0:
+            print()  # New line after progress
+        print(f"\n✅ Deepfabric generation complete!")
+        print(f"   Samples generated: {last_count['value']}")
+        print(f"   Expected samples: {expected_samples}")
 
     except subprocess.CalledProcessError as e:
         print(f"Error running deepfabric: {e}")
-        print(f"\nStdout: {e.stdout}")
-        print(f"\nStderr: {e.stderr}")
         sys.exit(1)
     except FileNotFoundError:
         print("deepfabric not found. Please install it first:")
@@ -180,7 +250,7 @@ def run_deepfabric(config_file: str, raw_output: str, domain: str = "general",
         if 'e' not in locals():  # Only clean up on success
             try:
                 Path(temp_config).unlink()
-                print(f"Cleaned up temporary config: {temp_config}")
+                print(f"   Cleaned up temporary config: {temp_config}")
             except:
                 pass
         else:

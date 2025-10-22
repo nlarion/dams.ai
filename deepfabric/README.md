@@ -28,6 +28,12 @@ The system generates balanced datasets containing both advertisement and non-adv
   - Generates HTML snippets with ad/non-ad classifications
   - Outputs to `dataset2.json`
 
+- **`non-ad-content.yaml`** - Configuration for generating NON-AD content only
+  - Focused on blog posts, articles, navigation, and standard web elements
+  - Generates 100% non-advertising content (is_ad: false)
+  - Higher temperature for more variety
+  - Ideal for balancing datasets that need more non-ad examples
+
 - **`ad_detection_formatter.py`** - Custom formatter for extracting structured data
   - Parses HTML snippets from GPT-4 responses
   - Extracts classification labels (is_ad: true/false)
@@ -173,6 +179,34 @@ python generate_ad_dataset.py --domain finance --samples 500 --tree-depth 3 \
   --tree-degree 6 --ad-ratio 0.3
 ```
 
+### Generating Pure Non-Ad Content
+
+If you need to generate ONLY non-advertising content (for balancing datasets or creating non-ad training data), use the dedicated `non-ad-content.yaml` configuration:
+
+```bash
+# Generate 100 non-ad HTML examples (blog posts, articles, navigation)
+python generate_ad_dataset.py --config non-ad-content.yaml --samples 100 --ad-ratio 0.0
+
+# Generate 200 non-ad examples with high variety
+python generate_ad_dataset.py --config non-ad-content.yaml --samples 200 \
+  --temperature 1.2 --tree-depth 4 --tree-degree 5 --ad-ratio 0.0
+
+# Generate 50 non-ad examples quickly
+python generate_ad_dataset.py --config non-ad-content.yaml --samples 50 --ad-ratio 0.0
+```
+
+**Non-Ad Content Types Generated:**
+- Blog posts with author info and timestamps
+- Tech articles with code snippets
+- News articles with proper structure
+- Navigation menus and headers
+- Footer sections and copyright
+- Contact forms and FAQ sections
+- Tables, galleries, and UI components
+- Documentation and tutorial content
+
+This is particularly useful when you have plenty of ad examples but need more legitimate content examples to train your classifier to distinguish real content from advertisements.
+
 ### Command-Line Options
 
 ```bash
@@ -203,9 +237,11 @@ Options:
   --ad-ratio R         Ratio of ads to non-ads (0.0-1.0, default: 0.5)
                        0.5 = 50% ads, 50% non-ads (balanced)
                        0.7 = 70% ads, 30% non-ads
+                       0.0 = 100% non-ads (best with non-ad-content.yaml)
 
   --config PATH        Path to YAML configuration file
                        (default: python-tutorial.yaml)
+                       Use 'non-ad-content.yaml' for pure non-ad generation
 ```
 
 **Understanding Topic Trees:**
