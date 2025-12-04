@@ -40,12 +40,10 @@ class ImageGenerator:
         self.api_key = api_key
         self.delay = delay
         self.max_retries = max_retries
+        self.last_retry_count = 0  # Track retries for the last generation
 
         # Configure the API
         genai.configure(api_key=api_key)
-
-        # Initialize the Imagen model
-        self.model = genai.ImageGenerationModel("imagen-3.0-generate-001")
 
         logger.info(f"ImageGenerator initialized with {delay}s delay and {max_retries} max retries")
 
@@ -59,38 +57,134 @@ class ImageGenerator:
         Returns:
             PIL Image object or None if generation failed
         """
+        self.last_retry_count = 0  # Reset retry count for this generation
+
         for attempt in range(self.max_retries):
             try:
                 logger.info(f"Generating image (attempt {attempt + 1}/{self.max_retries})")
+                logger.info(f"Prompt: {prompt[:100]}...")  # Log first 100 chars of prompt
 
-                # Generate image using Imagen API
-                result = self.model.generate_images(
-                    prompt=prompt,
-                    number_of_images=1,
-                    safety_filter_level="block_some",
-                    person_generation="allow_adult",
-                    aspect_ratio="1:1"
-                )
+                # Use Gemini 2.5 Flash Image model from Google AI Studio
+                model = genai.GenerativeModel('gemini-2.5-flash-image')
 
-                # Extract the image from the result
-                if result.images:
-                    image = result.images[0]
-                    # Convert to PIL Image
-                    pil_image = image._pil_image
+                # Generate image
+                response = model.generate_content(prompt)
+
+                # Extract image from response
+                if hasattr(response, 'candidates') and len(response.candidates) > 0:
+                    candidate = response.candidates[0]
+                    if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                        for part in candidate.content.parts:
+                            # Check for file data FIRST (Gemini often returns images as file URIs)
+                            if hasattr(part, 'file_data') and part.file_data:
+                                logger.info("Image returned as file_data")
+
+                                # Debug: show what's in file_data
+                                logger.debug(f"file_data attributes: {dir(part.file_data)}")
+
+                                if hasattr(part.file_data, 'file_uri') and part.file_data.file_uri:
+                                    file_uri = part.file_data.file_uri
+                                    logger.info(f"File URI found: {file_uri}")
+
+                                    # Download from URI using the configured API
+                                    try:
+                                        # Use the file API to download
+                                        file_name = file_uri.split('/')[-1]
+                                        if file_name:
+                                            file_obj = genai.get_file(name=file_name)
+                                            import requests
+                                            img_response = requests.get(file_obj.uri)
+                                            if img_response.status_code == 200:
+                                                pil_image = Image.open(io.BytesIO(img_response.content))
+                                                logger.info("Image downloaded successfully from URI")
+                                                self.last_retry_count = attempt  # Track successful attempt
+                                                return pil_image
+                                            else:
+                                                logger.error(f"Failed to download from file URI: {img_response.status_code}")
+                                    except Exception as e:
+                                        logger.error(f"Error downloading from file API: {e}")
+                                        # Try direct download as fallback
+                                        try:
+                                            import requests
+                                            img_response = requests.get(file_uri)
+                                            if img_response.status_code == 200:
+                                                pil_image = Image.open(io.BytesIO(img_response.content))
+                                                logger.info("Image downloaded successfully from direct URI")
+                                                self.last_retry_count = attempt  # Track successful attempt
+                                                return pil_image
+                                        except:
+                                            logger.error(f"Direct URI download also failed")
+                                else:
+                                    logger.warning("file_data exists but file_uri is empty or missing")
+                                    # Check if there's mime_type and data
+                                    if hasattr(part.file_data, 'mime_type'):
+                                        logger.info(f"file_data mime_type: {part.file_data.mime_type}")
+                                    # Skip this part and continue to check for inline_data
+                                    continue
+
+                            # Check for inline image data
+                            elif hasattr(part, 'inline_data'):
+                                import base64
+
+                                # Get the image data
+                                image_data = part.inline_data.data
+
+                                # Skip if empty
+                                if not image_data or len(image_data) == 0:
+                                    logger.warning("Inline data is empty, skipping...")
+                                    continue
+
+                                # Try different ways to decode the image
+                                try:
+                                    # If it's base64 encoded
+                                    if isinstance(image_data, str):
+                                        image_bytes = base64.b64decode(image_data)
+                                    else:
+                                        image_bytes = image_data
+
+                                    pil_image = Image.open(io.BytesIO(image_bytes))
+                                    logger.info("Image generated successfully with Gemini 2.5 Flash Image (inline)")
+                                    self.last_retry_count = attempt  # Track successful attempt
+                                    return pil_image
+                                except Exception as img_error:
+                                    logger.error(f"Failed to decode inline image data: {img_error}")
+                                    logger.error(f"Image data type: {type(image_data)}")
+                                    logger.error(f"Image data length: {len(image_data) if hasattr(image_data, '__len__') else 'N/A'}")
+
+                # Alternative: check if response has a direct image attribute
+                if hasattr(response, 'image'):
+                    pil_image = response.image
                     logger.info("Image generated successfully")
+                    self.last_retry_count = attempt  # Track successful attempt
                     return pil_image
-                else:
-                    logger.warning("No images returned from API")
-                    return None
+
+                # Debug: let's see what we actually got
+                logger.warning("No images returned from API")
+                logger.warning(f"Response type: {type(response)}")
+                if hasattr(response, 'candidates') and len(response.candidates) > 0:
+                    candidate = response.candidates[0]
+                    logger.warning(f"Candidate attributes: {[attr for attr in dir(candidate) if not attr.startswith('_')]}")
+                    if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                        logger.warning(f"Number of parts: {len(candidate.content.parts)}")
+                        for i, part in enumerate(candidate.content.parts):
+                            logger.warning(f"Part {i} type: {type(part)}")
+                            logger.warning(f"Part {i} attributes: {[attr for attr in dir(part) if not attr.startswith('_')]}")
+                            if hasattr(part, 'text'):
+                                logger.warning(f"Part {i} text: {part.text[:200]}...")
+                return None
 
             except Exception as e:
                 logger.error(f"Error on attempt {attempt + 1}: {str(e)}")
+                logger.error(f"Error type: {type(e).__name__}")
+                self.last_retry_count = attempt  # Track current attempt
+
                 if attempt < self.max_retries - 1:
                     wait_time = self.delay * (attempt + 1)  # Exponential backoff
                     logger.info(f"Retrying in {wait_time} seconds...")
                     time.sleep(wait_time)
                 else:
                     logger.error("Max retries reached. Generation failed.")
+                    logger.error(f"Full error: {e}")
                     return None
 
         return None

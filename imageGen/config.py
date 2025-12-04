@@ -27,8 +27,15 @@ PARAMETERS = {
         "food delivery",
         "automotive",
         "insurance",
+        "online streaming services",
+        "real estate",
+        "hotels and accommodations",
+        "christmas and holiday sales",
+        "fitness and gyms",
+        "credit cards and banking",
         "education and courses",
-        "entertainment streaming"
+        "entertainment streaming",
+        "shoes and accessories"
     ],
 
     "ad_visual_style": [
@@ -80,20 +87,36 @@ PARAMETERS = {
         "header strip"
     ],
 
-    # Non-advertisement content parameters
+    "ad_focus": [
+        "with prominent call-to-action button",
+        "brand-focused with logo and slogan",
+        "product showcase without CTA",
+        "lifestyle imagery with brand name",
+        "minimalist with just brand logo"
+    ],
+
+    # Non-advertisement content parameters - realistic images people view online
     "content_type": [
-        "article body text",
-        "navigation menu",
-        "user comment section",
-        "author bio card",
-        "footer information",
-        "search bar",
-        "login form",
-        "product description",
-        "news headline",
-        "blog post excerpt",
-        "social media post",
-        "FAQ section"
+        "news article photo of a person being interviewed",
+        "sports action photo showing athletes competing",
+        "celebrity photo from entertainment news",
+        "product review image showing the item without promotional text",
+        "social media photo of people and families",
+        "meme image or popular internet humor",
+        "cute animal photo (cat, dog, or wildlife)",
+        "sports highlight moment (goal, touchdown, basket)",
+        "Olympic athlete competing",
+        "coach or sports figure interview photo",
+        "product photo for e-commerce (electronics, guitar, book, car, etc.)",
+        "cartoon or comic strip",
+        "food photography from recipe or review",
+        "travel photography showing destinations",
+        "editorial photo from magazine article",
+        "behind-the-scenes photo from movie or show",
+        "musician or band performance photo",
+        "nature and landscape photography",
+        "tutorial or how-to image showing process",
+        "infographic or data visualization"
     ],
 
     "ui_element_type": [
@@ -171,10 +194,12 @@ PARAMETERS = {
 }
 
 # Prompt templates for advertisements
-AD_TEMPLATE = """A realistic screenshot of a {ad_type} on a website. The advertisement is for {ad_industry}, featuring {ad_visual_style}. The ad prominently displays a '{ad_cta_button}' call-to-action button and includes '{ad_promo_text}' promotional text. The ad appears as {ad_placement_context} on the page. The design uses a {color_scheme} color scheme with {layout_style}. The screenshot shows {device_context} in {theme_mode}. The image should look like an actual advertisement that would appear on a modern website, with clear branding elements, marketing copy, and visual appeal designed to attract clicks."""
+# Generate just the ad image itself, not a webpage containing it
+AD_TEMPLATE = """A {ad_type} image for {ad_industry}, {ad_focus}, featuring {ad_visual_style}. The design uses a {color_scheme} color scheme with {layout_style}. Designed for {device_context} in {theme_mode}. This should be ONLY the advertisement graphic itself - the actual banner/ad image with branding elements and visual appeal designed to attract attention. Do NOT include the surrounding webpage, browser chrome, or website UI - just the advertisement image itself as it would appear in an <img> tag."""
 
 # Prompt templates for non-advertisements
-NON_AD_TEMPLATE = """A realistic screenshot of legitimate website content showing {content_type}. The image includes {ui_element_type} as part of the standard user interface. The content features {media_type} presented in a natural editorial context. This is part of the {page_section} of the website. The design uses a {color_scheme} color scheme with {layout_style}. The screenshot shows {device_context} in {theme_mode}. The image should look like genuine website content, NOT an advertisement - no promotional call-to-action buttons, no discount offers, no marketing language, just regular website functionality and content that users expect to see."""
+# Generate realistic images people actually view online - NOT advertisements
+NON_AD_TEMPLATE = """{content_type}. This is genuine content that people view online, NOT an advertisement. The image should be realistic and natural, showing ONLY the subject matter itself. NO promotional text overlays, NO "Buy Now" buttons, NO sale prices, NO marketing slogans, NO discount offers. Just a regular photograph or image that would appear in articles, social media, product reviews, or entertainment content. The key distinction: product photos should show just the item itself (like an e-commerce product photo or review image), while advertisements have promotional graphics and text overlaid on the product. This is content people want to see, not marketing material."""
 
 # Image generation settings
 IMAGE_RESOLUTION = 1024  # 1024x1024 pixels (will be resized for CNN input)
@@ -185,3 +210,71 @@ DEFAULT_BATCH_SIZE = 10
 CNN_INPUT_SIZE = 224  # ResNet, MobileNet standard input size
 NORMALIZATION_MEAN = [0.485, 0.456, 0.406]  # ImageNet mean
 NORMALIZATION_STD = [0.229, 0.224, 0.225]  # ImageNet std
+
+# Invalid parameter combinations to avoid semantic inconsistencies
+INVALID_COMBINATIONS = [
+    # Example: popup ads shouldn't use footer placement
+    {"ad_type": "popup advertisement", "ad_placement_context": "footer banner placement"},
+    # Sidebar ads shouldn't be in modal overlay
+    {"ad_type": "sidebar advertisement", "ad_placement_context": "modal overlay"},
+    # Banner ads shouldn't float at bottom
+    {"ad_type": "banner advertisement", "ad_placement_context": "floating bottom bar"},
+    # Interstitial ads are full-screen, not sidebar
+    {"ad_type": "interstitial advertisement", "ad_placement_context": "right sidebar placement"},
+    # Native ads shouldn't be in modal overlay (they blend with content)
+    {"ad_type": "native advertisement", "ad_placement_context": "modal overlay"},
+]
+
+# Industry weights for sampling (higher = more likely to be selected)
+# Default weight is 1.0, adjust based on desired dataset distribution
+INDUSTRY_WEIGHTS = {
+    "e-commerce retail": 2.0,          # Common ad type
+    "travel and tourism": 1.0,
+    "financial services": 1.5,         # Important for detection
+    "gaming": 1.5,                      # Common online ads
+    "technology products": 1.5,
+    "health and wellness": 1.0,
+    "fashion and apparel": 1.2,
+    "food delivery": 1.2,
+    "automotive": 1.0,
+    "insurance": 1.0,
+    "online streaming services": 1.2,
+    "real estate": 0.8,
+    "hotels and accommodations": 0.8,
+    "christmas and holiday sales": 0.5, # Seasonal
+    "fitness and gyms": 0.8,
+    "credit cards and banking": 1.0,
+    "education and courses": 1.0,
+    "entertainment streaming": 1.2,
+    "shoes and accessories": 1.0
+}
+
+# Generation profiles configuration
+GENERATION_PROFILES = {
+    "balanced": {
+        "description": "Balanced 50/50 split across all industries",
+        "balanced": True,
+        "use_weights": True
+    },
+    "finance_focus": {
+        "description": "Focus on financial services ads",
+        "industry": "financial services",
+        "balanced": False
+    },
+    "ecommerce_focus": {
+        "description": "Focus on e-commerce retail ads",
+        "industry": "e-commerce retail",
+        "balanced": False
+    },
+    "gaming_focus": {
+        "description": "Focus on gaming industry ads",
+        "industry": "gaming",
+        "balanced": False
+    },
+    "high_volume": {
+        "description": "Weight towards most common ad types",
+        "balanced": True,
+        "use_weights": True,
+        "weight_multiplier": 1.5
+    }
+}
